@@ -1,0 +1,3 @@
+rootProject.name = 'BucTin'
+
+include ':app'
