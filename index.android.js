@@ -4,6 +4,7 @@ TODO:
   -Push Notifications for all 3 pages
   -Open Events in Facebook app
   -Manage Podcast format and get the stream going
+  -Add share button
 */
 
 import React, { Component } from 'react';
@@ -13,9 +14,9 @@ import {
 } from 'react-native';
 import { Router, Scene } from 'react-native-router-flux'; 
 
-import Events from './App/Components/Events';
-import News from './App/Components/News';
-import Podcasts from './App/Components/Podcasts';
+import Events from './App/Views/Events';
+import News from './App/Views/News';
+import Podcasts from './App/Views/Podcasts';
 
 const TabIcon = ({ selected, title }) => {
   return (
