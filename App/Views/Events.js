@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  ScrollView
+  ScrollView,
+  Alert
 } from 'react-native';
 
 import EventList from '../Components/EventList';
@@ -16,14 +17,46 @@ export default class Events extends Component {
     this.state = {
       eventList: []
     }
+    this.searchForUpdates = this.searchForUpdates.bind(this);
   }
-  componentDidMount() {
+  searchForUpdates() {
     fetch(eventsEndpoint)
       .then(response => response.json())
       .then(array => {
-        this.setState({eventList: array.data})
+        if(this.state.eventList.length === 0) { //check if this is the first request
+          this.setState({eventList: array.data});
+        } else { //if it is not the first request, compare if new events were added before changing the state
+          if(array.data[0].id !== this.state.eventList[0].id) {
+            let i = 0;
+            let newEvents = [];
+            while(array.data[i].id !== this.state.eventList[i].id) {
+              newEvents.push(array.data[i]);
+              i++;
+            }
+            this.setState({eventList: [...newEvents, ...this.state.eventList]}) //if new events were added, concat them to the existing state
+          }
+        }
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.error(error);
+        Alert.alert(
+          'Oops',
+          `An error has occurred while fetching events. Error details: ${error}`,
+          [
+            {text: 'Retry', onPress: () => {
+              console.log(`Error fetching data - Retry Pressed. Error: ${error}`);
+              this.searchForUpdates();
+            }
+            },
+            {text: 'Cancel', onPress: () => console.log(`Error fetching data - Cancel Pressed. Error: ${error}`)},
+          ],
+          { cancelable: false }
+        )
+      });
+  }
+  componentDidMount() {
+    this.searchForUpdates();
+    setInterval(this.searchForUpdates, 60000); //call the API every minute
   }
   render() {
     let events = this.state.eventList.map(item => {

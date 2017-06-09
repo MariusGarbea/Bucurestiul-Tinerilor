@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   StyleSheet,
   Text,
-  View
 } from 'react-native';
 import PropTypes from 'prop-types';
 
-export default EventList = ({ description, end_time, name, place, start_time }) => {
-  return (
+export default class EventList extends PureComponent {
+  render() {
+    let { description, end_time, name, place, start_time } = this.props;
+    return (
       <Text>{end_time}</Text>
-      
-  )
+    )
+  }
 }
 
 EventList.propTypes = {
