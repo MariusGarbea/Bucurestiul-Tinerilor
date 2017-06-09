@@ -113,7 +113,6 @@
     "no-throw-literal": 1,
     "no-unused-expressions": 0,
     "no-void": 0,
-    "no-warning-comments": [1, { "terms": ["todo", "tofix"], "location": "start" }],
     "no-with": 1,
     "radix": 1,
     "vars-on-top": 1,
@@ -159,7 +158,6 @@
     "key-spacing": [1, { "beforeColon": false, "afterColon": true }],
     "linebreak-style": 0,
     "max-nested-callbacks": [0, 3],
-    "new-cap": 0, // see Babel section
     "new-parens": 1,
     "newline-after-var": 0,
     "no-array-constructor": 1,
@@ -214,7 +212,7 @@
     "babel/object-shorthand": [1, "always"],
     // "babel/generator-star": 1, // deprecated
     "babel/generator-star-spacing": [1, "after"],
-    "babel/new-cap": 1,
+    "babel/new-cap": 0,
     "babel/object-curly-spacing": [1, "always"],
     "jsx-quotes": [2, "prefer-double"],
     // "babel/space-in-brackets": 1, // deprecated
