@@ -7,16 +7,22 @@ import PropTypes from 'prop-types';
 
 export default class EventList extends PureComponent {
   render() {
-    let { description, end_time, name, place, start_time } = this.props;
+    const { description, endTime, name, place, startTime } = this.props;
     return (
-      <Text>{end_time}</Text>
-    )
+      <Text>
+        <Text>{description}</Text>
+        <Text>{endTime}</Text>
+        <Text>{name}</Text>
+        <Text>{place.name}</Text>
+        <Text>{startTime}</Text>
+      </Text>
+    );
   }
 }
 
 EventList.propTypes = {
   description: PropTypes.string.isRequired,
-  end_time: PropTypes.string.isRequired,
+  endTime: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   place: PropTypes.shape({
     name: PropTypes.string,
@@ -25,12 +31,12 @@ EventList.propTypes = {
       country: PropTypes.string,
       latitude: PropTypes.number,
       longitude: PropTypes.number,
-      street: PropTypes.string
+      street: PropTypes.string,
     }),
-    id: PropTypes.string
+    id: PropTypes.string,
   }),
-  start_time: PropTypes.string.isRequired
-}
+  startTime: PropTypes.string.isRequired,
+};
 
 const styles = StyleSheet.create({
 

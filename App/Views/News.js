@@ -2,35 +2,35 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  ScrollView
+  ScrollView,
 } from 'react-native';
-var parseString = require('react-native-xml2js').parseString;
+import parseXML from 'react-native-xml2js';
 
 export default class News extends Component {
   constructor() {
     super();
     this.state = {
-      newsList: []
-    }
+      newsList: [],
+    };
     this.searchForUpdates = this.searchForUpdates.bind(this);
+  }
+  componentDidMount() {
+    this.searchForUpdates();
   }
   searchForUpdates() {
     fetch('http://bucurestiultinerilor.info/feed/')
       .then(response => response.text())
-      .then(array => {
-        parseString(array, (error, result) => {
-          if(error) {
+      .then((array) => {
+        parseXML.parseString(array, (error, result) => {
+          if (error) {
             throw new Error(error);
           }
           console.log(result.rss.channel[0].item[0].category[0]);
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
-      })
-  }
-  componentDidMount() {
-    this.searchForUpdates();
+      });
   }
   render() {
     return (
