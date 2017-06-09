@@ -26,10 +26,10 @@ const Tabs = TabNavigator({
   Podcasts: {screen: Podcasts}
 });
 
-const BucTin = () => {
+const rnapp = () => {
   return (
     <Tabs />
   );
 }
 
-AppRegistry.registerComponent('BucTin', () => BucTin);
+AppRegistry.registerComponent('rnapp', () => rnapp);

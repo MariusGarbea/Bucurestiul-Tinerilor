@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 
-export default class BucTin extends Component {
+export default class rnapp extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('BucTin', () => BucTin);
+AppRegistry.registerComponent('rnapp', () => rnapp);

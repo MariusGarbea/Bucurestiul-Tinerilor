@@ -1,4 +1,4 @@
-package com.buctin;
+package com.rnapp;
 
 import android.app.Application;
 
