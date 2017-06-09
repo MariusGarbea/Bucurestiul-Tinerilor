@@ -2,34 +2,33 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
+  View
 } from 'react-native';
+import PropTypes from 'prop-types';
 
-const access_token = "EAADbb7hJuS0BAGPNwhGiD3JLXWYUF8oxGNwEc4ZAiB7WRMBOaWXwjRFkTnQIC7HCNIMMzOQB75ZCmVZBL9THwrS7pWvOXaMqBECqFvZAijINas3FfcCnFTgehAQZAbwM7HsJHmE1dujvqCjuaBaMVVYUaZCZBBE7yZCYBZC7XLqAdmQZDZD";
-const eventsEndpoint = `https://graph.facebook.com/bucurestiultinerilor/events?access_token=${access_token}`;
+export default EventList = ({ description, end_time, name, place, start_time }) => {
+  return (
+      <Text>{end_time}</Text>
+      
+  )
+}
 
-export default class Events extends Component {
-  constructor() {
-    super();
-    this.state = {
-      eventList: []
-    }
-  }
-  componentDidMount() {
-    fetch(eventsEndpoint)
-      .then(response => response.json())
-      .then(array => {
-        this.setState({eventList: array.data})
-      })
-      .catch(error => console.log(error));
-  }
-  render() {
-    let descriptionList = this.state.eventList.map(item => item.description);
-    return (
-      <Text>
-        {descriptionList}
-      </Text>
-    );
-  }
+EventList.propTypes = {
+  description: PropTypes.string.isRequired,
+  end_time: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  place: PropTypes.shape({
+    name: PropTypes.string,
+    location: PropTypes.shape({
+      city: PropTypes.string,
+      country: PropTypes.string,
+      latitude: PropTypes.number,
+      longitude: PropTypes.number,
+      street: PropTypes.string
+    }),
+    id: PropTypes.string
+  }),
+  start_time: PropTypes.string.isRequired
 }
 
 const styles = StyleSheet.create({
