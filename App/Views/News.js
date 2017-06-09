@@ -1,33 +1,46 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
-  View
+  ScrollView
 } from 'react-native';
+var parseString = require('react-native-xml2js').parseString;
 
 export default class News extends Component {
+  constructor() {
+    super();
+    this.state = {
+      newsList: []
+    }
+    this.searchForUpdates = this.searchForUpdates.bind(this);
+  }
+  searchForUpdates() {
+    fetch('http://bucurestiultinerilor.info/feed/')
+      .then(response => response.text())
+      .then(array => {
+        parseString(array, (error, result) => {
+          if(error) {
+            throw new Error(error);
+          }
+          console.log(result.rss.channel[0].item[0].category[0]);
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+  componentDidMount() {
+    this.searchForUpdates();
+  }
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Fetch a list of news from an API and then display them if clicked in a new Scene
-        </Text>
-      </View>
+      <ScrollView>
+        <Text>Yes</Text>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
+
 });
