@@ -25,10 +25,10 @@ const Tabs = TabNavigator({
   Podcasts: { screen: Podcasts },
 });
 
-const rnapp = () => {
+const BucurestiulTinerilor = () => {
   return (
     <Tabs />
   );
 };
 
-AppRegistry.registerComponent('rnapp', () => rnapp);
+AppRegistry.registerComponent('BucurestiulTinerilor', () => BucurestiulTinerilor);

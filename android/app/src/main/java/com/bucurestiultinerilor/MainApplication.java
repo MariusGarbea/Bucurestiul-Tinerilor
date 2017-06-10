@@ -1,4 +1,4 @@
-package com.rnapp;
+package com.bucurestiultinerilor;
 
 import android.app.Application;
 

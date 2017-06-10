@@ -25,15 +25,15 @@ EventList.propTypes = {
   endTime: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   place: PropTypes.shape({
-    name: PropTypes.string,
+    name: PropTypes.string.isRequired,
     location: PropTypes.shape({
-      city: PropTypes.string,
-      country: PropTypes.string,
-      latitude: PropTypes.number,
-      longitude: PropTypes.number,
-      street: PropTypes.string,
+      city: PropTypes.string.isRequired,
+      country: PropTypes.string.isRequired,
+      latitude: PropTypes.number.isRequired,
+      longitude: PropTypes.number.isRequired,
+      street: PropTypes.string.isRequired,
     }),
-    id: PropTypes.string,
+    id: PropTypes.string.isRequired,
   }),
   startTime: PropTypes.string.isRequired,
 };
