@@ -29,7 +29,7 @@ The app should now compile and appear in the emulator.
 
 ## Contributing
 
-If you want to contribute, please use a linter (eg. **[ESLint](http://eslint.org/)**) and follow **[Airbnb's style guide](https://github.com/airbnb/javascript)**. Any contribution is welcome :smile:. 
+If you want to contribute, please use the rules in .eslintrc.json (eg. **[ESLint](http://eslint.org/)**) and follow **[Airbnb's style guide](https://github.com/airbnb/javascript)**. Any contribution is welcome :smile:. 
 
 ## License
 
