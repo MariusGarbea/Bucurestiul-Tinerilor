@@ -32,14 +32,13 @@ export default class Events extends Component {
           this.setState({ eventList: array.data });
         } else if (array.data[0].id !== this.state.eventList[0].id) {
         // if it is not the first request, compare if new events were added before changing the state
-          let i = 0;
           const newEvents = [];
-          while (array.data[i].id !== this.state.eventList[i].id) {
-            newEvents.push(array.data[i]);
-            i++;
+          const arrayLength = array.data.length;
+          for (let i = 0; i < arrayLength && array.data[i].id !== this.state.eventList[i].id; i++) {
+            newEvents.push(array.data[i]); // push every new event
           }
           this.setState({ eventList: [...newEvents, ...this.state.eventList] });
-          // if new events were added, concat them to the existing state
+          // if new events were added, spread them to the existing state
         }
       })
       .catch(error => {

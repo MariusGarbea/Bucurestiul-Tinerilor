@@ -208,14 +208,12 @@
     "no-plusplus": 0,
 
     /* Babel */
-    // "babel/block-scoped-var": 1,
-    "babel/object-shorthand": [1, "always"],
-    // "babel/generator-star": 1, // deprecated
-    "babel/generator-star-spacing": [1, "after"],
     "babel/new-cap": 0,
     "babel/object-curly-spacing": [1, "always"],
+
+    "generator-star-spacing": [1, "after"],
     "jsx-quotes": [2, "prefer-double"],
-    // "babel/space-in-brackets": 1, // deprecated
+    "object-shorthand": [1, "always"],
 
     /* React */
     "react/display-name": 1,
