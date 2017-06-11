@@ -1,10 +1,11 @@
 /*
 TODO:
-  -Manage routing for News page
+  -Manage routing for News page - use lastBuildDate for updating state
   -Push Notifications for all 3 pages
   -Open Events in Facebook app
   -Manage Podcast format and get the stream going
   -Add share button
+  -Add Google Analytics - UA-93545315-1
 */
 
 import React from 'react';
