@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
   ScrollView,
   Alert,
 } from 'react-native';
@@ -62,8 +61,6 @@ export default class Events extends Component {
     const events = this.state.eventList.map(item => {
       return (
         <EventList
-          description = {item.description}
-          endTime = {item.end_time}
           key = {item.id}
           name = {item.name}
           place = {item.place}
@@ -73,7 +70,7 @@ export default class Events extends Component {
     });
     return (
       <ScrollView>
-        <Text>{events}</Text>
+        {events}
       </ScrollView>
     );
   }
