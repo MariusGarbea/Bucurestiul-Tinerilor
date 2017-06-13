@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  Alert,
-} from 'react-native';
+import { StyleSheet, View, Alert } from 'react-native';
 
 import EventList from '../Components/EventList';
+import SpinnerHOC from '../Components/SpinnerHOC';
 
 const accessToken = `EAADbb7hJuS0BAGPNwhGiD3JLXWYUF8oxGNwEc4ZAiB7WRMBOaWXwjRFkTnQIC7HCNIMMzOQB75ZCmVZBL9THwrS7p
                      WvOXaMqBECqFvZAijINas3FfcCnFTgehAQZAbwM7HsJHmE1dujvqCjuaBaMVVYUaZCZBBE7yZCYBZC7XLqAdmQZDZD`;
 const eventsEndpoint = `https://graph.facebook.com/bucurestiultinerilor/events?access_token=${accessToken}`;
+
+const EventsWithSpinner = SpinnerHOC(View);
 
 export default class Events extends Component {
   constructor() {
@@ -41,10 +40,9 @@ export default class Events extends Component {
         }
       })
       .catch(error => {
-        console.error(error);
         Alert.alert(
           'Oops',
-          `An error has occurred while fetching events. Error details: ${error}`,
+          `An error has occurred. Error details: ${error}`,
           [
             { text: 'Retry', onPress: () => {
               console.log(`Error fetching data - Retry Pressed. Error: ${error}`);
@@ -58,6 +56,7 @@ export default class Events extends Component {
       });
   }
   render() {
+    const spinner = this.state.eventList.length === 0;
     const events = this.state.eventList.map(item => {
       return (
         <EventList
@@ -69,9 +68,9 @@ export default class Events extends Component {
       );
     });
     return (
-      <ScrollView>
-        {events}
-      </ScrollView>
+      <EventsWithSpinner spinner = {spinner}>
+        { events }
+      </EventsWithSpinner>
     );
   }
 }

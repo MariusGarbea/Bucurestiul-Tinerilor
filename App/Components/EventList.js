@@ -1,8 +1,5 @@
 import React, { PureComponent } from 'react';
-import {
-  StyleSheet,
-  Text,
-} from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { Content, ListItem, Body, Left, Right } from 'native-base';
 

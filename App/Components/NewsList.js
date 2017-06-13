@@ -1,18 +1,27 @@
-import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-} from 'react-native';
+// Use Card Image from NativeBase
 
-export default class News extends Component {
+import React, { PureComponent } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import PropTypes from 'prop-types';
+
+export default class NewsList extends PureComponent {
   render() {
+    const { author, pubDate, title } = this.props;
     return (
-      <Text>
-         Fetch a list of news from an API and then display them if clicked in a new Scene
-      </Text>
+      <View>
+        <Text>{ author }</Text>
+        <Text>{ pubDate }</Text>
+        <Text>{ title }</Text>
+      </View>
     );
   }
 }
+
+NewsList.propTypes = {
+  author: PropTypes.string.isRequired,
+  pubDate: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+};
 
 const styles = StyleSheet.create({
 

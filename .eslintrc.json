@@ -216,7 +216,7 @@
     "object-shorthand": [1, "always"],
 
     /* React */
-    "react/display-name": 1,
+    "react/display-name": 0,
     "react/jsx-boolean-value": 1,
     "react/jsx-no-duplicate-props": 1,
     "react/jsx-no-undef": 1,

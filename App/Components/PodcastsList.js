@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-} from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 
 export default class Podcasts extends Component {
   render() {
