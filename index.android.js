@@ -1,6 +1,6 @@
 /*
 TODO:
-  -Manage routing for News page - use lastBuildDate for updating state
+  -Manage routing for News and Events pages
   -Push Notifications for all 3 pages
   -Open Events in Facebook app
   -Manage Podcast format and get the stream going

@@ -1,11 +1,10 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
-import { Spinner } from 'native-base';
+import { ScrollView, ActivityIndicator } from 'react-native';
 
 const SpinnerHOC = Component => {
   return ({ spinner, children, ...props }) => (
     <ScrollView>
-		{ spinner ? <Spinner /> : <Component {...props} >{ children }</Component> }
+		{ spinner ? <ActivityIndicator size = "large" color = "red" /> : <Component {...props} >{ children }</Component> }
 	</ScrollView>
   );
 };

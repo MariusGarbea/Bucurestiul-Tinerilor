@@ -17,29 +17,31 @@ export default class News extends Component {
   }
   componentDidMount() {
     this.searchForUpdates();
-    setInterval(this.searchForUpdates, 60000); // call the API every minute
+    setInterval(this.searchForUpdates, 600000); // call the API every 10 minutes
   }
   searchForUpdates() {
     fetch('http://bucurestiultinerilor.info/feed/')
       .then(response => response.text())
-      .then((array) => {
+      .then(array => {
         parseXML.parseString(array, (error, result) => {
           if (error) {
             throw new Error(error);
           }
           const data = result.rss.channel[0].item;
-          if (this.state.newsList.length === 0) { // check if this is the first request
-            this.setState({ newsList: data });
-          } else if (data[0].pubDate[0] !== this.state.newsList[0].pubDate[0]) {
-            // if it is not the first request, compare if new events were added before changing the state
-            const newEvents = [];
-            const arrayLength = data.length;
-            for (let i = 0; i < arrayLength && data[i].pubDate[0] !== this.state.newsList[i].pubDate[0]; i++) {
-              newEvents.push(data[i]); // push every new event
-            }
-            this.setState({ newsList: [...newEvents, ...this.state.newsList] });
-            // if new events were added, spread them to the existing state
-          }
+          this.setState({ newsList: data });
+          // PREMATURE OPTIMIZATION - NO NEED FOR NOW AND POSSIBLY FOREVER
+          // if (this.state.newsList.length === 0) { // check if this is the first request
+          //   this.setState({ newsList: data });
+          // } else if (data[0].pubDate[0] !== this.state.newsList[0].pubDate[0]) {
+          //   // if it is not the first request, compare if new events were added before changing the state
+          //   const newEvents = [];
+          //   const arrayLength = data.length;
+          //   for (let i = 0; i < arrayLength && data[i].pubDate[0] !== this.state.newsList[i].pubDate[0]; i++) {
+          //     newEvents.push(data[i]); // push every new event
+          //   }
+          //   this.setState({ newsList: [...newEvents, ...this.state.newsList] });
+          //   // if new events were added, spread them to the existing state
+          // }
         });
       })
       .catch((error) => {
