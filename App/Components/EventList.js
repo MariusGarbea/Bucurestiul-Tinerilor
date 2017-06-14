@@ -3,7 +3,7 @@ import { StyleSheet, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { Content, ListItem, Body, Left, Right } from 'native-base';
 
-const months = ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export default class EventList extends PureComponent {
   render() {
