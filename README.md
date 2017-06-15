@@ -29,7 +29,7 @@ The app should now compile and appear in the emulator.
 
 ## Contributing
 
-If you want to contribute, please use the rules in .eslintrc.json (eg. **[ESLint](http://eslint.org/)**). Any contribution is welcome :smile:. 
+If you want to contribute with code, please write it according to the rules in .eslintrc.json. Any contribution is welcome :smile:. 
 
 ## License
 
