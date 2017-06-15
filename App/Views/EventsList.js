@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
 
-import EventList from '../Components/EventList';
+import Event from '../Components/Event';
 import SpinnerHOC from '../Components/SpinnerHOC';
 
 const accessToken = `EAADbb7hJuS0BAGPNwhGiD3JLXWYUF8oxGNwEc4ZAiB7WRMBOaWXwjRFkTnQIC7HCNIMMzOQB75ZCmVZBL9THwrS7p
@@ -10,7 +10,7 @@ const eventsEndpoint = `https://graph.facebook.com/bucurestiultinerilor/events?a
 
 const EventsWithSpinner = SpinnerHOC(View);
 
-export default class Events extends Component {
+export default class EventsList extends Component {
   constructor() {
     super();
     this.state = {
@@ -59,7 +59,7 @@ export default class Events extends Component {
     const spinner = this.state.eventList.length === 0;
     const events = this.state.eventList.map(item => {
       return (
-        <EventList
+        <Event
           key = {item.id}
           name = {item.name}
           place = {item.place}

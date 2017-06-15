@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
+import ProptTypes from 'prop-types';
 import parseXML from 'react-native-xml2js';
 
 import SpinnerHOC from '../Components/SpinnerHOC';
-import NewsList from '../Components/NewsList';
+import News from '../Components/News';
 
 const NewsWithSpinner = SpinnerHOC(View);
 
-export default class News extends Component {
+export default class NewsList extends Component {
   constructor() {
     super();
     this.state = {
@@ -64,9 +65,10 @@ export default class News extends Component {
     const spinner = this.state.newsList.length === 0;
     const news = this.state.newsList.map((item, index) => {
       return (
-        <NewsList
+        <News
           author = {item['dc:creator'][0]}
           key = {index}
+          navigation = {this.props.navigation}
           pubDate = {item.pubDate[0]}
           title = {item.title[0]}
         />
@@ -79,6 +81,10 @@ export default class News extends Component {
     );
   }
 }
+
+NewsList.ProptTypes = {
+  navigation: ProptTypes.object.isRequired,
+};
 
 const styles = StyleSheet.create({
 

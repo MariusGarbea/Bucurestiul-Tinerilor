@@ -5,7 +5,7 @@ import { Content, ListItem, Body, Left, Right } from 'native-base';
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-export default class EventList extends PureComponent {
+export default class Event extends PureComponent {
   render() {
     const { name, place, startTime } = this.props;
     const startDate = startTime.substring(8, 10) + '\n' + months[parseInt(startTime.substring(5, 7), 10)];
@@ -29,7 +29,7 @@ export default class EventList extends PureComponent {
   }
 }
 
-EventList.propTypes = {
+Event.propTypes = {
   name: PropTypes.string.isRequired,
   place: PropTypes.shape({
     name: PropTypes.string.isRequired,

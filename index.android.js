@@ -9,26 +9,38 @@ TODO:
 */
 
 import React from 'react';
-import {
-  AppRegistry,
-} from 'react-native';
-import {
-  TabNavigator,
-} from 'react-navigation';
+import { AppRegistry } from 'react-native';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 
-import Events from './App/Views/Events';
-import News from './App/Views/News';
+import EventsList from './App/Views/EventsList';
+import NewsList from './App/Views/NewsList';
+import SpecificArticle from './App/Views/SpecificArticle';
 import Podcasts from './App/Views/Podcasts';
 
-const Tabs = TabNavigator({
-  News: { screen: News },
-  Events: { screen: Events },
+const Home = TabNavigator({
+  News: { screen: NewsList },
+  Events: { screen: EventsList },
   Podcasts: { screen: Podcasts },
+});
+
+const App = StackNavigator({
+  Home: {
+    screen: Home,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  SpecificArticle: {
+    screen: SpecificArticle,
+    navigationOptions: {
+      title: 'News',
+    },
+  },
 });
 
 const BucurestiulTinerilor = () => {
   return (
-    <Tabs />
+    <App />
   );
 };
 
