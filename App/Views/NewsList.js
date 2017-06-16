@@ -66,16 +66,16 @@ export default class NewsList extends Component {
     const news = this.state.newsList.map((item, index) => {
       return (
         <News
-          author = {item['dc:creator'][0]}
-          key = {index}
-          navigation = {this.props.navigation}
-          pubDate = {item.pubDate[0]}
-          title = {item.title[0]}
+          author={item['dc:creator'][0]}
+          key={index}
+          navigation={this.props.navigation}
+          pubDate={item.pubDate[0]}
+          title={item.title[0]}
         />
       );
     });
     return (
-      <NewsWithSpinner spinner = {spinner}>
+      <NewsWithSpinner spinner={spinner}>
         { news }
       </NewsWithSpinner>
     );

@@ -11,20 +11,20 @@ export default class Event extends PureComponent {
     const startDate = startTime.substring(8, 10) + '\n' + months[parseInt(startTime.substring(5, 7), 10)];
     const startHour = startTime.substring(11, 16);
     return (
-      <Content>
-        <ListItem avatar>
-          <Left>
-            <Text>{ startDate }</Text>
-          </Left>
-          <Body>
-            <Text>{ name }</Text>
-            <Text note>{ place.name }</Text>
-          </Body>
-          <Right>
-            <Text note>{ startHour }</Text>
-          </Right>
-        </ListItem>
-      </Content>
+        <Content>
+          <ListItem avatar onPress={() => alert("pressed")} onLongPress={() => alert("long pressed")}>
+            <Left>
+              <Text>{ startDate }</Text>
+            </Left>
+            <Body>
+              <Text>{ name }</Text>
+              <Text note>{ place.name }</Text>
+            </Body>
+            <Right>
+              <Text note>{ startHour }</Text>
+            </Right>
+          </ListItem>
+        </Content>
     );
   }
 }

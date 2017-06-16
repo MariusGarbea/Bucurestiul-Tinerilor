@@ -33,7 +33,7 @@ const App = StackNavigator({
   SpecificArticle: {
     screen: SpecificArticle,
     navigationOptions: {
-      title: 'News',
+      title: 'Home',
     },
   },
 });

@@ -60,15 +60,15 @@ export default class EventsList extends Component {
     const events = this.state.eventList.map(item => {
       return (
         <Event
-          key = {item.id}
-          name = {item.name}
-          place = {item.place}
-          startTime = {item.start_time}
+          key={item.id}
+          name={item.name}
+          place={item.place}
+          startTime={item.start_time}
         />
       );
     });
     return (
-      <EventsWithSpinner spinner = {spinner}>
+      <EventsWithSpinner spinner={spinner}>
         { events }
       </EventsWithSpinner>
     );
