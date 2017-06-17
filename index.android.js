@@ -1,15 +1,11 @@
 /*
 TODO:
-  -Manage routing for News and Events pages
   -Push Notifications for all 3 pages
-  -Open Events in Facebook app
-  -Manage Podcast format and get the stream going
-  -Add share button
   -Add Google Analytics - UA-93545315-1
 */
 
 import React from 'react';
-import { AppRegistry } from 'react-native';
+import { AppRegistry, Button, Share } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import EventsList from './App/Views/EventsList';
@@ -32,9 +28,19 @@ const App = StackNavigator({
   },
   SpecificArticle: {
     screen: SpecificArticle,
-    navigationOptions: {
+    navigationOptions: ({ navigation }) => ({
       title: 'Home',
-    },
+      headerRight: <Button
+                    onPress={() => {
+                      Share.share({
+                        message: navigation.state.params.author,
+                        title: navigation.state.params.title,
+                      })
+                        .then(console.log('Shared article'));
+                    }}
+                    title="Share"/>,
+      headerTintColor: 'red',
+    }),
   },
 });
 

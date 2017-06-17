@@ -44,12 +44,17 @@ export default class EventsList extends Component {
           'Oops',
           `An error has occurred. Error details: ${error}`,
           [
-            { text: 'Retry', onPress: () => {
-              console.log(`Error fetching data - Retry Pressed. Error: ${error}`);
-              this.searchForUpdates();
+            {
+              text: 'Retry',
+              onPress: () => {
+                console.log(`Retry Pressed. Error: ${error}`);
+                this.searchForUpdates();
+              },
             },
+            {
+              text: 'Cancel',
+              onPress: () => console.log(`Cancel Pressed. Error: ${error}`),
             },
-            { text: 'Cancel', onPress: () => console.log(`Error fetching data - Cancel Pressed. Error: ${error}`) },
           ],
           { cancelable: false }
         );
@@ -60,6 +65,8 @@ export default class EventsList extends Component {
     const events = this.state.eventList.map(item => {
       return (
         <Event
+          description={item.description}
+          endTime={item.end_time}
           key={item.id}
           name={item.name}
           place={item.place}

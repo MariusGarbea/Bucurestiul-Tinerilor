@@ -29,14 +29,14 @@ export default class News extends PureComponent {
             </CardItem>
             <CardItem cardBody>
               <Image
-                resizeMode="contain"
-                source={{ uri: 'https://bucurestiultinerilor.info/wp-content/uploads/2017/03/Bucurestiul_Tinerilor_Logo_4cm-01.jpg' }}
-                style={styles.image}
+               resizeMode="contain"
+               source={{ uri: 'https://bucurestiultinerilor.info/wp-content/uploads/2017/03/Bucurestiul_Tinerilor_Logo_4cm-01.jpg' }}
+               style={styles.image}
               />
             </CardItem>
             <CardItem>
               <Right>
-                <Text>{ date }</Text>
+                <Text>🕓 { date }</Text>
               </Right>
             </CardItem>
           </Card>
