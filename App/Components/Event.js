@@ -26,7 +26,7 @@ export default class Event extends PureComponent {
     const startDate = startTime.substring(8, 10) + '\n' + months[parseInt(startTime.substring(5, 7), 10)];
     const startHour = startTime.substring(11, 16);
     const endHour = endTime.substring(11, 16);
-    const eventURL = 'fb://profile/132753734806';
+    const eventURL = 'https://www.facebook.com/';
     return (
         <Content>
           <ListItem avatar

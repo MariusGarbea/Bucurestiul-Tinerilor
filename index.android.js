@@ -30,16 +30,16 @@ const App = StackNavigator({
     screen: SpecificArticle,
     navigationOptions: ({ navigation }) => ({
       title: 'Home',
-      headerRight: <Button
-                    onPress={() => {
-                      Share.share({
-                        message: navigation.state.params.author,
-                        title: navigation.state.params.title,
-                      })
-                        .then(console.log('Shared article'));
-                    }}
-                    title="Share"/>,
-      headerTintColor: 'red',
+      headerRight:
+        <Button
+         onPress={() => {
+           Share.share({
+             message: `${navigation.state.params.link}\n${navigation.state.params.title}\nby ${navigation.state.params.author}`,
+           })
+           .then(console.log('Shared article'));
+         }}
+         title="Share"/>,
+      headerTintColor: 'pink',
     }),
   },
 });

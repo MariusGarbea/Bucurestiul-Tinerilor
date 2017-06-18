@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
-import ProptTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import parseXML from 'react-native-xml2js';
 
 import SpinnerHOC from '../Components/SpinnerHOC';
@@ -67,7 +67,9 @@ export default class NewsList extends Component {
       return (
         <News
           author={item['dc:creator'][0]}
+          content={item['content:encoded'][0]}
           key={index}
+          link={item.link[0]}
           navigation={this.props.navigation}
           pubDate={item.pubDate[0]}
           title={item.title[0]}
@@ -82,8 +84,8 @@ export default class NewsList extends Component {
   }
 }
 
-NewsList.ProptTypes = {
-  navigation: ProptTypes.object.isRequired,
+NewsList.PropTypes = {
+  navigation: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({
