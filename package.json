@@ -13,6 +13,7 @@
 		"react-native": "^0.45.1",
 		"react-native-audio-streaming": "^2.3.2",
 		"react-native-htmlview": "^0.9.0",
+		"react-native-video": "^1.0.0",
 		"react-native-xml2js": "^1.0.3",
 		"react-navigation": "^1.0.0-beta.11"
 	},

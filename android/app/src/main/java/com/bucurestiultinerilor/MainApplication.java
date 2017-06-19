@@ -1,5 +1,6 @@
 package com.bucurestiultinerilor;
 
+import com.brentvatne.react.ReactVideoPackage;
 import com.audioStreaming.ReactNativeAudioStreamingPackage;
 
 import android.app.Application;
@@ -25,6 +26,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+          new ReactVideoPackage(),
           new ReactNativeAudioStreamingPackage()
       );
     }

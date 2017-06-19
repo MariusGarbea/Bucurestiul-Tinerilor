@@ -51,7 +51,7 @@ export default class PodcastList extends Component {
       return (
         <Podcast
           key={index}
-          title={item.title}
+          title={item.title[0]}
           url={item.enclosure[0].$.url}
         />
       );
