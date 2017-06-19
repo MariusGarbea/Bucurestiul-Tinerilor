@@ -9,18 +9,14 @@ import News from '../Components/News';
 const NewsWithSpinner = SpinnerHOC(View);
 
 export default class NewsList extends Component {
-  constructor() {
-    super();
-    this.state = {
-      newsList: [],
-    };
-    this.searchForUpdates = this.searchForUpdates.bind(this);
+  state = {
+    newsList: [],
   }
   componentDidMount() {
     this.searchForUpdates();
     setInterval(this.searchForUpdates, 600000); // call the API every 10 minutes
   }
-  searchForUpdates() {
+  searchForUpdates = () => {
     fetch('http://bucurestiultinerilor.info/feed/')
       .then(response => response.text())
       .then(array => {

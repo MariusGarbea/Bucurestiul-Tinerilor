@@ -11,18 +11,14 @@ const eventsEndpoint = `https://graph.facebook.com/bucurestiultinerilor/events?a
 const EventsWithSpinner = SpinnerHOC(View);
 
 export default class EventsList extends Component {
-  constructor() {
-    super();
-    this.state = {
-      eventList: [],
-    };
-    this.searchForUpdates = this.searchForUpdates.bind(this);
+  state = {
+    eventList: [],
   }
   componentDidMount() {
     this.searchForUpdates();
     setInterval(this.searchForUpdates, 600000); // call the API every 10 minutes
   }
-  searchForUpdates() {
+  searchForUpdates = () => {
     fetch(eventsEndpoint)
       .then(response => response.json())
       .then(array => this.setState({ eventList: array.data }))
