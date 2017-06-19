@@ -1,25 +1,24 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
-import PropTypes from 'prop-types';
 import parseXML from 'react-native-xml2js';
 
-import News from '../Components/News';
+import Podcast from '../Components/Podcast';
 import SpinnerHOC from '../Components/SpinnerHOC';
 
-const newsEndpoint = 'http://bucurestiultinerilor.info/feed/';
+const PodcastWithSpinner = SpinnerHOC(View);
 
-const NewsWithSpinner = SpinnerHOC(View);
+const podcastsEndpoint = 'http://feeds.soundcloud.com/users/soundcloud:users:312765325/sounds.rss';
 
-export default class NewsList extends Component {
+export default class PodcastList extends Component {
   state = {
-    newsList: [],
+    podcastList: [],
   }
   componentDidMount() {
     this.searchForUpdates();
     setInterval(this.searchForUpdates, 600000); // call the API every 10 minutes
   }
   searchForUpdates = () => {
-    fetch(newsEndpoint)
+    fetch(podcastsEndpoint)
       .then(response => response.text())
       .then(array => {
         parseXML.parseString(array, (error, result) => {
@@ -27,7 +26,7 @@ export default class NewsList extends Component {
             throw new Error(error);
           }
           const data = result.rss.channel[0].item;
-          this.setState({ newsList: data });
+          this.setState({ podcastList: data });
         });
       })
       .catch((error) => {
@@ -47,31 +46,23 @@ export default class NewsList extends Component {
       });
   }
   render() {
-    const spinner = this.state.newsList.length === 0;
-    const news = this.state.newsList.map((item, index) => {
+    const spinner = this.state.podcastList.length === 0;
+    const podcasts = this.state.podcastList.map((item, index) => {
       return (
-        <News
-          author={item['dc:creator'][0]}
-          content={item['content:encoded'][0]}
+        <Podcast
           key={index}
-          link={item.link[0]}
-          navigation={this.props.navigation}
-          pubDate={item.pubDate[0]}
-          title={item.title[0]}
+          title={item.title}
+          url={item.enclosure[0].$.url}
         />
       );
     });
     return (
-      <NewsWithSpinner spinner={spinner}>
-        { news }
-      </NewsWithSpinner>
+      <PodcastWithSpinner spinner={spinner}>
+        { podcasts }
+      </PodcastWithSpinner>
     );
   }
 }
-
-NewsList.propTypes = {
-  navigation: PropTypes.object.isRequired,
-};
 
 const styles = StyleSheet.create({
 

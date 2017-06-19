@@ -10,13 +10,13 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import EventsList from './App/Views/EventsList';
 import NewsList from './App/Views/NewsList';
+import PodcastsList from './App/Views/PodcastsList';
 import SpecificArticle from './App/Views/SpecificArticle';
-import Podcasts from './App/Views/Podcasts';
 
 const Home = TabNavigator({
   News: { screen: NewsList },
   Events: { screen: EventsList },
-  Podcasts: { screen: Podcasts },
+  Podcasts: { screen: PodcastsList },
 });
 
 const App = StackNavigator({

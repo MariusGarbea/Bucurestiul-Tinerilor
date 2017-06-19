@@ -34,11 +34,11 @@ export default class SpecificArticle extends PureComponent {
   }
 }
 
-SpecificArticle.PropTypes = {
+SpecificArticle.propTypes = {
   author: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
 };
 
 const $nicePink = '#FF3366';
