@@ -50,7 +50,9 @@ export default class PodcastList extends Component {
     const podcasts = this.state.podcastList.map((item, index) => {
       return (
         <Podcast
+          duration={item['itunes:duration'][0]}
           key={index}
+          thumbnail={item['itunes:image'][0].$.href}
           title={item.title[0]}
           url={item.enclosure[0].$.url}
         />

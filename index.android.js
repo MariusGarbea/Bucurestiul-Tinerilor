@@ -39,7 +39,7 @@ const App = StackNavigator({
            .then(console.log('Shared article'));
          }}
          title="Share"/>,
-      headerTintColor: 'pink',
+      headerTintColor: 'black',
     }),
   },
 });
