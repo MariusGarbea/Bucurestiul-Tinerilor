@@ -18,30 +18,31 @@ export default class EventsList extends Component {
     this.searchForUpdates();
     setInterval(this.searchForUpdates, 600000); // call the API every 10 minutes
   }
-  searchForUpdates = () => {
-    fetch(eventsEndpoint)
-      .then(response => response.json())
-      .then(array => this.setState({ eventList: array.data }))
-      .catch(error => {
-        Alert.alert(
-          'Oops',
-          `An error has occurred. Error details: ${error}`,
-          [
-            {
-              text: 'Retry',
-              onPress: () => {
-                console.log(`Retry Pressed. Error: ${error}`);
-                this.searchForUpdates();
-              },
+  async searchForUpdates() {
+    try {
+      const response = await fetch(eventsEndpoint);
+      const responseJSON = await response.json();
+      this.setState({ eventList: responseJSON.data });
+    } catch(error) {
+      Alert.alert(
+        'Oops',
+        `An error has occurred. Error details: ${error}`,
+        [
+          {
+            text: 'Retry',
+            onPress: () => {
+              console.log(`Retry Pressed. Error: ${error}`);
+              this.searchForUpdates();
             },
-            {
-              text: 'Cancel',
-              onPress: () => console.log(`Cancel Pressed. Error: ${error}`),
-            },
-          ],
-          { cancelable: false }
-        );
-      });
+          },
+          {
+            text: 'Cancel',
+            onPress: () => console.log(`Cancel Pressed. Error: ${error}`),
+          },
+        ],
+        { cancelable: false }
+      );
+    }
   }
   render() {
     const spinner = this.state.eventList.length === 0;

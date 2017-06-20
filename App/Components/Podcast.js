@@ -3,6 +3,9 @@ import { StyleSheet, ScrollView, Text, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import Video from 'react-native-video';
 
+// use ListItem like in Events
+// change fetch from promises to async/await
+
 export default class Podcast extends PureComponent {
   state = {
     paused: false,

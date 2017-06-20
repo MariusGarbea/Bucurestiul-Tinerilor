@@ -17,33 +17,32 @@ export default class PodcastList extends Component {
     this.searchForUpdates();
     setInterval(this.searchForUpdates, 600000); // call the API every 10 minutes
   }
-  searchForUpdates = () => {
-    fetch(podcastsEndpoint)
-      .then(response => response.text())
-      .then(array => {
-        parseXML.parseString(array, (error, result) => {
-          if (error) {
-            throw new Error(error);
-          }
-          const data = result.rss.channel[0].item;
-          this.setState({ podcastList: data });
-        });
-      })
-      .catch((error) => {
-        Alert.alert(
-          'Oops',
-          `An error has occurred. Error details: ${error}`,
-          [
-            { text: 'Retry', onPress: () => {
-              console.log(`Error fetching data - Retry Pressed. Error: ${error}`);
-              this.searchForUpdates();
-            },
-            },
-            { text: 'Cancel', onPress: () => console.log(`Error fetching data - Cancel Pressed. Error: ${error}`) },
-          ],
-          { cancelable: false }
-        );
+  async searchForUpdates() {
+    try {
+      const response = await fetch(podcastsEndpoint);
+      const responseTXT = await response.text();
+      parseXML.parseString(responseTXT, (error, result) => {
+        if (error) {
+          throw new Error(error);
+        }
+        const data = result.rss.channel[0].item;
+        this.setState({ podcastList: data });
       });
+    } catch(error) {
+      Alert.alert(
+        'Oops',
+        `An error has occurred. Error details: ${error}`,
+        [
+          { text: 'Retry', onPress: () => {
+            console.log(`Error fetching data - Retry Pressed. Error: ${error}`);
+            this.searchForUpdates();
+          },
+          },
+          { text: 'Cancel', onPress: () => console.log(`Error fetching data - Cancel Pressed. Error: ${error}`) },
+        ],
+        { cancelable: false }
+      );
+    }
   }
   render() {
     const spinner = this.state.podcastList.length === 0;
