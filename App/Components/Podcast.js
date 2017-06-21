@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, ScrollView, Text, Image } from 'react-native';
+import { StyleSheet, Text, Image, Alert, Linking } from 'react-native';
 import PropTypes from 'prop-types';
 import Video from 'react-native-video';
+import { Content, ListItem, Body, Left, Right } from 'native-base';
 
 // use ListItem like in Events
 // change fetch from promises to async/await
@@ -10,17 +11,22 @@ export default class Podcast extends PureComponent {
   state = {
     paused: false,
   }
+  openSoundcloudPodcast = (link) => {
+    Linking.canOpenURL(link)
+      .then(supported => {
+        if (!supported) {
+          console.log(`Can't handle url: ${link}`);
+        } else {
+          return Linking.openURL(link);
+        }
+      })
+      .catch(err => Alert.alert('An error occurred', err));
+  }
   render() {
-    const { duration, thumbnail, title, url } = this.props;
+    const { duration, link, pubDate, thumbnail, title, url } = this.props;
+    const date = pubDate.substring(5, 16);
     return (
-      <ScrollView>
-        <Text>{title}</Text>
-        <Text>{duration}</Text>
-        <Image
-          resizeMode="center"
-          source={{ uri: thumbnail }}
-          style={styles.img}
-        />
+      <Content>
         <Video
           onLoad={() => {
             this.setState({
@@ -34,21 +40,63 @@ export default class Podcast extends PureComponent {
           source={{ uri: url }}
           style={styles.video}
         />
-      </ScrollView>
+        <ListItem avatar
+         onLongPress={() => {
+           Alert.alert(
+             'Podcast details',
+             `Title: ${title}\n\nPosted on: ${date}\n\nDuration: ${duration}\n\nLink: ${link}`,
+             [
+               {
+                 text: 'Visit on Soundcloud',
+                 onPress: () => {
+                   this.openSoundcloudPodcast(link);
+                   console.log('Soundcloud visited');
+                 },
+               },
+               {
+                 text: 'Dismiss',
+                 onPress: () => {
+                   console.log('Dismissed');
+                 },
+               },
+             ],
+           );
+         }}
+         onPress={() => {
+           this.setState({ paused: !this.state.paused });
+         }}>
+          <Left>
+            <Image
+              resizeMode="center"
+              source={{ uri: thumbnail }}
+              style={styles.img}
+            />
+          </Left>
+          <Body>
+            <Text>{ title }</Text>
+            <Text note>{ date }</Text>
+          </Body>
+          <Right>
+            <Text>🕓 { duration }</Text>
+          </Right>
+        </ListItem>
+      </Content>
     );
   }
 }
 
 Podcast.propTypes = {
   duration: PropTypes.string.isRequired,
-  thumbnail: PropTypes.string,
+  link: PropTypes.string.isRequired,
+  pubDate: PropTypes.string.isRequired,
+  thumbnail: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
 };
 
 const styles = StyleSheet.create({
   img: {
-    width: 100,
-    height: 100,
+    width: 75,
+    height: 75,
   },
 });

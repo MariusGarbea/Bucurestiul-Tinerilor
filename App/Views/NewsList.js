@@ -16,7 +16,7 @@ export default class NewsList extends Component {
   }
   componentDidMount() {
     this.searchForUpdates();
-    setInterval(this.searchForUpdates, 600000); // call the API every 10 minutes
+    setInterval(this.searchForUpdates.bind(this), 600000); // call the API every 10 minutes
   }
   async searchForUpdates() {
     try {
@@ -27,6 +27,7 @@ export default class NewsList extends Component {
           throw new Error(error);
         }
         const data = result.rss.channel[0].item;
+        console.log(this.state.newsList);
         this.setState({ newsList: data });
       });
     } catch(error) {

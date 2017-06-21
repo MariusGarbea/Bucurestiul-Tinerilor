@@ -44,7 +44,7 @@ export default class News extends PureComponent {
             </CardItem>
             <CardItem>
               <Right>
-                <Text>🕓 { date }</Text>
+                <Text>{ date }</Text>
               </Right>
             </CardItem>
           </Card>

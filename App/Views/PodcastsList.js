@@ -15,7 +15,7 @@ export default class PodcastList extends Component {
   }
   componentDidMount() {
     this.searchForUpdates();
-    setInterval(this.searchForUpdates, 600000); // call the API every 10 minutes
+    setInterval(this.searchForUpdates.bind(this), 600000); // call the API every 10 minutes
   }
   async searchForUpdates() {
     try {
@@ -51,6 +51,8 @@ export default class PodcastList extends Component {
         <Podcast
           duration={item['itunes:duration'][0]}
           key={index}
+          link={item.link[0]}
+          pubDate={item.pubDate[0]}
           thumbnail={item['itunes:image'][0].$.href}
           title={item.title[0]}
           url={item.enclosure[0].$.url}
