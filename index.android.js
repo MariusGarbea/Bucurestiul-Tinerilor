@@ -2,6 +2,8 @@
 TODO:
   -Push Notifications for all 3 pages
   -Add Google Analytics - UA-93545315-1
+  -Add new About page
+  -Add Redux support
 */
 
 import React from 'react';
@@ -11,12 +13,14 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import EventsList from './App/Views/EventsList';
 import NewsList from './App/Views/NewsList';
 import PodcastsList from './App/Views/PodcastsList';
+import About from './App/Views/About';
 import SpecificArticle from './App/Views/SpecificArticle';
 
 const Home = TabNavigator({
   News: { screen: NewsList },
   Events: { screen: EventsList },
   Podcasts: { screen: PodcastsList },
+  About: { screen: About },
 });
 
 const App = StackNavigator({
