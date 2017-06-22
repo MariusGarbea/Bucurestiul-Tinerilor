@@ -18,11 +18,11 @@ export default class Event extends PureComponent {
       .catch(err => Alert.alert('An error occurred', err));
   }
   render() {
-    const { description, endTime, name, place, startTime } = this.props;
+    const { description, endTime, id, name, place, startTime } = this.props;
     const startDate = startTime.substring(8, 10) + '\n' + months[parseInt(startTime.substring(5, 7), 10)];
     const startHour = startTime.substring(11, 16);
     const endHour = endTime.substring(11, 16);
-    const eventURL = 'https://www.facebook.com/';
+    const eventURL = `https://www.facebook.com/events/${id}`;
     return (
         <Content>
           <ListItem avatar
@@ -79,7 +79,7 @@ Event.propTypes = {
       longitude: PropTypes.number.isRequired,
       street: PropTypes.string.isRequired,
     }),
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
   }),
   startTime: PropTypes.string.isRequired,
 };

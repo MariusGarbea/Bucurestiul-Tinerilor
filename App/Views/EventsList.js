@@ -51,6 +51,7 @@ export default class EventsList extends Component {
         <Event
           description={item.description}
           endTime={item.end_time}
+          id={item.id}
           key={item.id}
           name={item.name}
           place={item.place}
