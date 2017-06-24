@@ -66,18 +66,33 @@ export default class Event extends PureComponent {
   }
 }
 
+Event.defaultProps = {
+  place: {
+    name: 'Unknown place',
+    location: {
+      city: 'Unknown city',
+      country: '',
+      latitude: NaN,
+      longitude: NaN,
+      street: '',
+    },
+    id: '',
+  },
+};
+
 Event.propTypes = {
   description: PropTypes.string.isRequired,
   endTime: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   place: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
     location: PropTypes.shape({
-      city: PropTypes.string.isRequired,
-      country: PropTypes.string.isRequired,
-      latitude: PropTypes.number.isRequired,
-      longitude: PropTypes.number.isRequired,
-      street: PropTypes.string.isRequired,
+      city: PropTypes.string,
+      country: PropTypes.string,
+      latitude: PropTypes.number,
+      longitude: PropTypes.number,
+      street: PropTypes.string,
     }),
     id: PropTypes.string,
   }),

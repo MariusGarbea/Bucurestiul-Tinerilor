@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, View, Alert, Text, Dimensions, Image, Slider } from 'react-native';
 import parseXML from 'react-native-xml2js';
+import { Container } from 'native-base';
 
 import Podcast from '../Components/Podcast';
+import PodcastPlayer from '../Components/PodcastPlayer';
 import SpinnerHOC from '../Components/SpinnerHOC';
 
 const PodcastWithSpinner = SpinnerHOC(View);
@@ -60,9 +62,16 @@ export default class PodcastList extends Component {
       );
     });
     return (
-      <PodcastWithSpinner spinner={spinner}>
-        { podcasts }
-      </PodcastWithSpinner>
+      <Container>
+        <PodcastWithSpinner spinner={spinner}>
+          { podcasts }
+        </PodcastWithSpinner>
+        <PodcastPlayer
+          duration="01:23:45"
+          thumbnail="http://i1.sndcdn.com/artworks-000229176688-7utubg-original.jpg"
+          title="Bucurestiul Tinerilor"
+        />
+      </Container>
     );
   }
 }

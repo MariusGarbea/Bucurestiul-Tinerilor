@@ -19,7 +19,7 @@ import SpecificArticle from './App/Views/SpecificArticle';
 const Home = TabNavigator({
   News: { screen: NewsList },
   Events: { screen: EventsList },
-  Podcasts: { screen: PodcastsList },
+  Podcast: { screen: PodcastsList },
   About: { screen: About },
 });
 
