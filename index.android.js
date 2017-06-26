@@ -7,8 +7,9 @@ TODO:
 */
 
 import React from 'react';
-import { AppRegistry, Button, Share } from 'react-native';
+import { AppRegistry, Button, Share, TouchableOpacity } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
+import Icon from 'react-native-vector-icons/Entypo';
 
 import EventsList from './App/Views/EventsList';
 import NewsList from './App/Views/NewsList';
@@ -35,14 +36,21 @@ const App = StackNavigator({
     navigationOptions: ({ navigation }) => ({
       title: 'Home',
       headerRight:
-        <Button
-         onPress={() => {
-           Share.share({
-             message: `${navigation.state.params.link}\n${navigation.state.params.title}\nby ${navigation.state.params.author}`,
-           })
-           .then(console.log('Shared article'));
-         }}
-         title="Share"/>,
+        <TouchableOpacity
+          onPress={() => {
+            Share.share({
+              message: `${navigation.state.params.link}\n${navigation.state.params.title}\nby ${navigation.state.params.author}`,
+            })
+            .then(console.log('Shared article'));
+          }}
+          style={{ marginRight: 15 }}
+          >
+          <Icon
+            name="share"
+            size={30}
+            color="black"
+          />
+        </TouchableOpacity>,
       headerTintColor: 'black',
     }),
   },

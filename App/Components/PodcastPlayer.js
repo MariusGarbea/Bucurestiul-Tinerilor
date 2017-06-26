@@ -1,36 +1,46 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { StyleSheet, View, Text, Dimensions, Image, Slider } from 'react-native';
 import PropTypes from 'prop-types';
+import Icon from 'react-native-vector-icons/Entypo';
 
-const PodcastPlayer = ({ duration, thumbnail, title }) => {
-  return (
-    <View style={styles.player}>
-      <Image
-        resizeMode="center"
-        source={{ uri: thumbnail }}
-        style={styles.img}
-      />
-      <View style={{}}>
-        <View style={styles.row}>
-          <Text>{ title }</Text>
-          <Text>{ duration }</Text>
-        </View>
-        <View style={styles.row}>
-          <Text>▐▐</Text>
-          <Slider
-            style={styles.slider}
-          />
+export default class PodcastPlayer extends PureComponent {
+  render() {
+    const { duration, thumbnail, title } = this.props;
+    return (
+      <View style={styles.player}>
+        <Image
+          resizeMode="center"
+          source={{ uri: thumbnail }}
+          style={styles.img}
+        />
+        <View>
+          <View style={styles.row}>
+            <Text>{ title }</Text>
+            <Text>{ duration }</Text>
+          </View>
+          <View style={styles.row}>
+            <Icon
+              name="controller-play"
+              size={30}
+              color="black"
+            />
+            <Slider
+              style={styles.slider}
+            />
+          </View>
         </View>
       </View>
-    </View>
-  );
-};
+    );
+  }
+}
 
 PodcastPlayer.propTypes = {
-  duration: PropTypes.string,
-  thumbnail: PropTypes.string,
-  title: PropTypes.string,
+  duration: PropTypes.string.isRequired,
+  thumbnail: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 };
+
+const $tabBlue = '#2196F3';
 
 const styles = StyleSheet.create({
   img: {
@@ -41,18 +51,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    alignSelf: 'flex-end',
-    height: 70,
+    height: 75,
     width: Dimensions.get('window').width,
-    backgroundColor: 'red',
+    backgroundColor: 'pink',
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
   slider: {
     width: 250,
   },
 });
-
-export default PodcastPlayer;
