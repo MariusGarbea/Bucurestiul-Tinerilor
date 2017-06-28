@@ -1,3 +1,5 @@
+// Consider using WebView for displaying articles; advantages: can render the iframes
+
 import React, { Component } from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
 import PropTypes from 'prop-types';

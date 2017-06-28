@@ -18,13 +18,16 @@ export default class News extends PureComponent {
     const { author, content, link, pubDate, title } = this.props;
     const date = pubDate.substring(5, 16);
     return (
-      <TouchableOpacity onPress={() => this.props.navigation.navigate('SpecificArticle', {
-        author,
-        content,
-        date,
-        link,
-        title,
-      })}>
+      <TouchableOpacity
+        activeOpacity={0.5}
+        onPress={() => this.props.navigation.navigate('SpecificArticle', {
+          author,
+          content,
+          date,
+          link,
+          title,
+        })}
+      >
         <Content onLayout={() => this.onLayout()}>
           <Card>
             <CardItem>

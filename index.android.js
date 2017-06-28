@@ -7,7 +7,7 @@ TODO:
 */
 
 import React from 'react';
-import { AppRegistry, Button, Share, TouchableOpacity } from 'react-native';
+import { AppRegistry, Share, TouchableOpacity } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Entypo';
 
@@ -37,6 +37,7 @@ const App = StackNavigator({
       title: 'Home',
       headerRight:
         <TouchableOpacity
+          activeOpacity={0.5}
           onPress={() => {
             Share.share({
               message: `${navigation.state.params.link}\n${navigation.state.params.title}\nby ${navigation.state.params.author}`,
@@ -46,9 +47,9 @@ const App = StackNavigator({
           style={{ marginRight: 15 }}
           >
           <Icon
+            color="black"
             name="share"
             size={30}
-            color="black"
           />
         </TouchableOpacity>,
       headerTintColor: 'black',

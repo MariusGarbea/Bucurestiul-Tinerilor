@@ -44,7 +44,7 @@ export default class Podcast extends PureComponent {
          onLongPress={() => {
            Alert.alert(
              'Podcast details',
-             `Title: ${title}\n\nPosted on: ${date}\n\nDuration: ${duration}\n\nLink: ${link}`,
+             `Title: ${title}\n\nPosted on: ${date}\n\nDuration: ${duration}`,
              [
                {
                  text: 'Visit on Soundcloud',

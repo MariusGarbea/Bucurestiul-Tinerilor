@@ -49,6 +49,8 @@ const styles = StyleSheet.create({
   },
   player: {
     flexDirection: 'row',
+    paddingLeft: 5,
+    paddingRight: 5,
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 75,
@@ -57,9 +59,9 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
   slider: {
-    width: 250,
+    width: 230,
   },
 });
