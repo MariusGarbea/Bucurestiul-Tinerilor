@@ -2,13 +2,13 @@
 TODO:
   -Push Notifications for all 3 pages
   -Add Google Analytics - UA-93545315-1
-  -Add new About page
   -Add Redux support
 */
 
 import React from 'react';
 import { AppRegistry, Share, TouchableOpacity } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
+import PushNotification from 'react-native-push-notification';
 import Icon from 'react-native-vector-icons/Entypo';
 
 import EventsList from './App/Views/EventsList';
@@ -17,6 +17,15 @@ import PodcastsList from './App/Views/PodcastsList';
 import About from './App/Views/About';
 import SpecificArticle from './App/Views/SpecificArticle';
 
+// Push Notification Configuration
+PushNotification.configure({
+  // Called when a notification is opened
+  onNotification: function(notification) {
+    console.log('NOTIFICATION:', notification); // Navigate to the specific route
+  },
+});
+
+// Routing
 const Home = TabNavigator({
   News: { screen: NewsList },
   Events: { screen: EventsList },
