@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 import Video from 'react-native-video';
 import { Content, ListItem, Body, Left, Right } from 'native-base';
 
-// use ListItem like in Events
-// change fetch from promises to async/await
-
 export default class Podcast extends PureComponent {
   state = {
     paused: false,

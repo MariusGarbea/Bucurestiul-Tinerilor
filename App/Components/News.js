@@ -3,11 +3,9 @@ import { StyleSheet, Text, Image, Dimensions, TouchableOpacity } from 'react-nat
 import PropTypes from 'prop-types';
 import { Content, Card, CardItem, Left, Right, Body } from 'native-base';
 
-const width = Dimensions.get('window').width;
-
 export default class News extends PureComponent {
   state = {
-    width,
+    width: Dimensions.get('window').width,
   }
   onLayout = () => {
     this.setState({

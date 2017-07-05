@@ -4,10 +4,36 @@ import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Entypo';
 
 export default class PodcastPlayer extends PureComponent {
+  state = {
+    width: Dimensions.get('window').width,
+  }
+  onLayout = () => {
+    this.setState({
+      width: Dimensions.get('window').width,
+    });
+  }
+  playerStyle = (width) => ({
+    playerLayout: {
+      flexDirection: 'row',
+      paddingLeft: 5,
+      paddingRight: 5,
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      height: 75,
+      width: width,
+      backgroundColor: 'pink'
+    },
+    slider: {
+      width: width-125
+    }
+  })
   render() {
     const { duration, thumbnail, title } = this.props;
+    const { width } = this.state;
     return (
-      <View style={styles.player}>
+      <View
+        onLayout={() => this.onLayout()}
+        style={this.playerStyle(width).playerLayout}>
         <Image
           resizeMode="center"
           source={{ uri: thumbnail }}
@@ -25,7 +51,7 @@ export default class PodcastPlayer extends PureComponent {
               color="black"
             />
             <Slider
-              style={styles.slider}
+              style={this.playerStyle(width).slider}
             />
           </View>
         </View>
@@ -47,21 +73,8 @@ const styles = StyleSheet.create({
     width: 75,
     height: 75,
   },
-  player: {
-    flexDirection: 'row',
-    paddingLeft: 5,
-    paddingRight: 5,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    height: 75,
-    width: Dimensions.get('window').width,
-    backgroundColor: 'pink',
-  },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  slider: {
-    width: 230,
   },
 });

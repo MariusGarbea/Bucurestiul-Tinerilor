@@ -35,14 +35,21 @@ export default class PodcastList extends Component {
         'Oops',
         `An error has occurred. Error details: ${error}`,
         [
-          { text: 'Retry', onPress: () => {
-            console.log(`Error fetching data - Retry Pressed. Error: ${error}`);
-            this.searchForUpdates();
+          {
+            text: 'Retry',
+            onPress: () => {
+              console.log(`Error fetching data - Retry Pressed. Error: ${error}`);
+              this.searchForUpdates();
+            },
           },
+          {
+            text: 'Cancel',
+            onPress: () => console.log(`Error fetching data - Cancel Pressed. Error: ${error}`)
           },
-          { text: 'Cancel', onPress: () => console.log(`Error fetching data - Cancel Pressed. Error: ${error}`) },
         ],
-        { cancelable: false }
+        {
+          cancelable: false
+        }
       );
     }
   }

@@ -40,7 +40,9 @@ export default class EventsList extends Component {
             onPress: () => console.log(`Cancel Pressed. Error: ${error}`),
           },
         ],
-        { cancelable: false }
+        {
+          cancelable: false
+        }
       );
     }
   }

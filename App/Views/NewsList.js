@@ -20,22 +20,6 @@ export default class NewsList extends Component {
   componentDidMount() {
     this.searchForUpdates();
     setInterval(this.searchForUpdates.bind(this), 600000); // call the API every 10 minutes
-    PushNotification.localNotification({
-      autoCancel: true, // (optional) default: true
-      largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
-      smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
-      bigText: "My big text that will be shown when notification is expanded", // (optional) default: "message" prop
-      subText: "This is a subText", // (optional) default: none
-      color: "red", // (optional) default: system default
-      vibrate: true, // (optional) default: true
-      vibration: 300, // vibration length in milliseconds, ignored if vibrate=false, default: 1000
-
-      title: "My Notification Title",
-      message: "My Notification Message", // (required)
-      playSound: true,
-      soundName: 'default', // (optional) Sound to play when the notification is shown. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'.
-      number: '10', // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
-    });
   }
   async searchForUpdates() {
     try {
@@ -54,14 +38,21 @@ export default class NewsList extends Component {
         'Oops',
         `An error has occurred. Error details: ${error}`,
         [
-          { text: 'Retry', onPress: () => {
-            console.log(`Error fetching data - Retry Pressed. Error: ${error}`);
-            this.searchForUpdates();
+          {
+            text: 'Retry',
+            onPress: () => {
+              console.log(`Error fetching data - Retry Pressed. Error: ${error}`);
+              this.searchForUpdates();
+            },
           },
+          {
+            text: 'Cancel',
+            onPress: () => console.log(`Error fetching data - Cancel Pressed. Error: ${error}`)
           },
-          { text: 'Cancel', onPress: () => console.log(`Error fetching data - Cancel Pressed. Error: ${error}`) },
         ],
-        { cancelable: false }
+        {
+          cancelable: false
+        }
       );
     }
   }

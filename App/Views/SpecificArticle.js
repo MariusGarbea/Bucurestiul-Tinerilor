@@ -3,11 +3,9 @@ import { StyleSheet, Text, ScrollView, Image, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
 import HTMLView from 'react-native-htmlview';
 
-const width = Dimensions.get('window').width;
-
 export default class SpecificArticle extends PureComponent {
   state = {
-    width,
+    width: Dimensions.get('window').width,
   }
   onLayout = () => {
     this.setState({
