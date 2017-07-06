@@ -19,7 +19,7 @@ export default class NewsList extends Component {
   }
   componentDidMount() {
     this.searchForUpdates();
-    setInterval(this.searchForUpdates.bind(this), 600000); // call the API every 10 minutes
+    // setInterval(this.searchForUpdates.bind(this), 600000); // call the API every 10 minutes
   }
   async searchForUpdates() {
     try {

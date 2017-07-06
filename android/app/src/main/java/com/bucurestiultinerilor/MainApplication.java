@@ -1,7 +1,8 @@
 package com.bucurestiultinerilor;
 
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.brentvatne.react.ReactVideoPackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
+import com.idehub.GoogleAnalyticsBridge.GoogleAnalyticsBridgePackage;
 
 import android.app.Application;
 
@@ -27,7 +28,8 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
           new ReactVideoPackage(),
-          new ReactNativePushNotificationPackage()
+          new ReactNativePushNotificationPackage(),
+          new GoogleAnalyticsBridgePackage()
       );
     }
   };
