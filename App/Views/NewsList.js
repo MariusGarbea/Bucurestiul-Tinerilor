@@ -30,7 +30,6 @@ export default class NewsList extends Component {
           throw new Error(error);
         }
         const data = result.rss.channel[0].item;
-        console.log(this.state.newsList);
         this.setState({ newsList: data });
       });
     } catch(error) {

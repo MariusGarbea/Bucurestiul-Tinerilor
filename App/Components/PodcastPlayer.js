@@ -1,9 +1,12 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, View, Text, Dimensions, Image, Slider } from 'react-native';
+import { StyleSheet, View, Text, Dimensions, Image, Slider, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Entypo';
+import { connect } from 'react-redux';
 
-export default class PodcastPlayer extends PureComponent {
+import { togglePlaying } from '../actions/actions';
+
+class PodcastPlayer extends PureComponent {
   state = {
     width: Dimensions.get('window').width,
   }
@@ -28,8 +31,9 @@ export default class PodcastPlayer extends PureComponent {
     }
   })
   render() {
-    const { duration, thumbnail, title } = this.props;
+    const { duration, onPlayPauseClick, thumbnail, title } = this.props;
     const { width } = this.state;
+    const icon = this.props.isPlaying ? <Icon name="controller-paus" size={30} color="black" /> : <Icon name="controller-play" size={30} color="black" />
     return (
       <View
         onLayout={() => this.onLayout()}
@@ -45,11 +49,7 @@ export default class PodcastPlayer extends PureComponent {
             <Text>{ duration }</Text>
           </View>
           <View style={styles.row}>
-            <Icon
-              name="controller-play"
-              size={30}
-              color="black"
-            />
+            <TouchableOpacity onPress={() => onPlayPauseClick()}>{ icon }</TouchableOpacity>
             <Slider
               style={this.playerStyle(width).slider}
             />
@@ -57,6 +57,20 @@ export default class PodcastPlayer extends PureComponent {
         </View>
       </View>
     );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    isPlaying: state.songIsPlaying
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onPlayPauseClick: () => {
+      dispatch(togglePlaying());
+    }
   }
 }
 
@@ -78,3 +92,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 });
+
+export default connect(mapStateToProps, mapDispatchToProps)(PodcastPlayer);

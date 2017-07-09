@@ -59,6 +59,7 @@ export default class PodcastList extends Component {
       return (
         <Podcast
           duration={item['itunes:duration'][0]}
+          id={index}
           key={index}
           link={item.link[0]}
           pubDate={item.pubDate[0]}

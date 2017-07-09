@@ -2,7 +2,6 @@
 TODO:
   -Push Notifications for all 3 pages when app is in background
   -Add Google Analytics - UA-93545315-1
-  -Add Redux support
 */
 
 import React from 'react';
@@ -11,12 +10,14 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import PushNotification from 'react-native-push-notification';
 import Icon from 'react-native-vector-icons/Entypo';
 import { GoogleAnalyticsTracker } from 'react-native-google-analytics-bridge';
+import { Provider } from 'react-redux';
 
 import EventsList from './App/Views/EventsList';
 import NewsList from './App/Views/NewsList';
 import PodcastsList from './App/Views/PodcastsList';
 import About from './App/Views/About';
 import SpecificArticle from './App/Views/SpecificArticle';
+import store from './App/store/configureStore';
 
 let tracker = new GoogleAnalyticsTracker('UA-93545315-1');
 
@@ -71,7 +72,9 @@ const App = StackNavigator({
 
 const BucurestiulTinerilor = () => {
   return (
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   );
 };
 

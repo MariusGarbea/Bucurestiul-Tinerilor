@@ -3,8 +3,11 @@ import { StyleSheet, Text, Image, Alert, Linking } from 'react-native';
 import PropTypes from 'prop-types';
 import Video from 'react-native-video';
 import { Content, ListItem, Body, Left, Right } from 'native-base';
+import { connect } from 'react-redux';
 
-export default class Podcast extends PureComponent {
+import { selectSong } from '../actions/actions';
+
+class Podcast extends PureComponent {
   state = {
     paused: false,
   }
@@ -20,7 +23,7 @@ export default class Podcast extends PureComponent {
       .catch(err => Alert.alert('An error occurred', err));
   }
   render() {
-    const { duration, link, pubDate, thumbnail, title, url } = this.props;
+    const { duration, id, link, onSongSelect, pubDate, thumbnail, title, url } = this.props;
     const date = pubDate.substring(5, 16);
     return (
       <Content>
@@ -60,7 +63,7 @@ export default class Podcast extends PureComponent {
            );
          }}
          onPress={() => {
-           this.setState({ paused: !this.state.paused });
+           onSongSelect(id);
          }}>
           <Left>
             <Image
@@ -82,6 +85,20 @@ export default class Podcast extends PureComponent {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    isPlaying: state.songIsPlaying
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSongSelect: (id) => {
+      dispatch(selectSong(id));
+    }
+  }
+}
+
 Podcast.propTypes = {
   duration: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
@@ -97,3 +114,5 @@ const styles = StyleSheet.create({
     height: 75,
   },
 });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Podcast);
