@@ -1,89 +1,91 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Alert, Text, Dimensions, Image, Slider } from 'react-native';
-import parseXML from 'react-native-xml2js';
+import { StyleSheet, View, Alert } from 'react-native';
+import PropTypes from 'prop-types';
 import { Container } from 'native-base';
+import { connect } from 'react-redux';
 
 import Podcast from '../Components/Podcast';
 import PodcastPlayer from '../Components/PodcastPlayer';
 import SpinnerHOC from '../Components/SpinnerHOC';
+import { podcastItemsFetchData } from '../actions/actions';
 
 const PodcastWithSpinner = SpinnerHOC(View);
 
 const podcastsEndpoint = 'http://feeds.soundcloud.com/users/soundcloud:users:312765325/sounds.rss';
 
-export default class PodcastList extends Component {
-  state = {
-    podcastList: [],
-  }
+class PodcastsList extends Component {
   componentDidMount() {
-    this.searchForUpdates();
-    // setInterval(this.searchForUpdates.bind(this), 600000); // call the API every 10 minutes
+    this.props.fetchPodcastData(podcastsEndpoint);
   }
-  async searchForUpdates() {
-    try {
-      const response = await fetch(podcastsEndpoint);
-      const responseTXT = await response.text();
-      parseXML.parseString(responseTXT, (error, result) => {
-        if (error) {
-          throw new Error(error);
-        }
-        const data = result.rss.channel[0].item;
-        this.setState({ podcastList: data });
-      });
-    } catch(error) {
-      Alert.alert(
-        'Oops',
-        `An error has occurred. Error details: ${error}`,
-        [
-          {
-            text: 'Retry',
-            onPress: () => {
-              console.log(`Error fetching data - Retry Pressed. Error: ${error}`);
-              this.searchForUpdates();
-            },
-          },
-          {
-            text: 'Cancel',
-            onPress: () => console.log(`Error fetching data - Cancel Pressed. Error: ${error}`)
-          },
-        ],
+  fetchHasErrored = () => (
+    Alert.alert(
+      'Oops',
+      `An error has occurred. Error details: ${this.props.error}`,
+      [
         {
-          cancelable: false
-        }
-      );
-    }
-  }
+          text: 'Retry',
+          onPress: () => {
+            this.props.fetchPodcastData(podcastsEndpoint);
+          },
+        },
+        {
+          text: 'Cancel',
+        },
+      ],
+      {
+        cancelable: false,
+      }
+    )
+  )
   render() {
-    const spinner = this.state.podcastList.length === 0;
-    const podcasts = this.state.podcastList.map((item, index) => {
+    const { data, error, isLoading } = this.props;
+    const podcasts = data.map(item => {
       return (
         <Podcast
-          duration={item['itunes:duration'][0]}
-          id={index}
-          key={index}
-          link={item.link[0]}
-          pubDate={item.pubDate[0]}
-          thumbnail={item['itunes:image'][0].$.href}
-          title={item.title[0]}
-          url={item.enclosure[0].$.url}
+          id={item.id}
+          key={item.id}
         />
       );
     });
+    if(error) {
+      return (
+        this.fetchHasErrored()
+      );
+    }
     return (
       <Container>
-        <PodcastWithSpinner spinner={spinner}>
+        <PodcastWithSpinner spinner={isLoading}>
           { podcasts }
         </PodcastWithSpinner>
-        <PodcastPlayer
-          duration="01:23:45"
-          thumbnail="http://i1.sndcdn.com/artworks-000229176688-7utubg-original.jpg"
-          title="Bucurestiul Tinerilor"
-        />
+        <PodcastPlayer />
       </Container>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    data: state.data,
+    error: state.error,
+    isLoading: state.isLoading,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchPodcastData: url => dispatch(podcastItemsFetchData(url)),
+  };
+};
+
+PodcastsList.propTypes = {
+  data: PropTypes.array.isRequired,
+  error: PropTypes.object,
+  fetchPodcastData: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+};
+
 const styles = StyleSheet.create({
 
 });
+
+export default connect(mapStateToProps, mapDispatchToProps)(PodcastsList);

@@ -19,7 +19,6 @@ export default class NewsList extends Component {
   }
   componentDidMount() {
     this.searchForUpdates();
-    // setInterval(this.searchForUpdates.bind(this), 600000); // call the API every 10 minutes
   }
   async searchForUpdates() {
     try {
@@ -46,11 +45,11 @@ export default class NewsList extends Component {
           },
           {
             text: 'Cancel',
-            onPress: () => console.log(`Error fetching data - Cancel Pressed. Error: ${error}`)
+            onPress: () => console.log(`Error fetching data - Cancel Pressed. Error: ${error}`),
           },
         ],
         {
-          cancelable: false
+          cancelable: false,
         }
       );
     }

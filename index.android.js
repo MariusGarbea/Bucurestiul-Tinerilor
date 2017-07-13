@@ -2,10 +2,11 @@
 TODO:
   -Push Notifications for all 3 pages when app is in background
   -Add Google Analytics - UA-93545315-1
+  -Add Ads
 */
 
 import React from 'react';
-import { AppRegistry, Share, TouchableOpacity } from 'react-native';
+import { AppRegistry, Share, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import PushNotification from 'react-native-push-notification';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -19,12 +20,12 @@ import About from './App/Views/About';
 import SpecificArticle from './App/Views/SpecificArticle';
 import store from './App/store/configureStore';
 
-let tracker = new GoogleAnalyticsTracker('UA-93545315-1');
+const tracker = new GoogleAnalyticsTracker('UA-93545315-1');
 
 // Push Notification Configuration
 PushNotification.configure({
   // Called when a notification is opened
-  onNotification: function(notification) {
+  onNotification(notification) {
     console.log('NOTIFICATION:', notification); // Navigate to the specific route
   },
 });
@@ -55,9 +56,9 @@ const App = StackNavigator({
             Share.share({
               message: `${navigation.state.params.link}\n${navigation.state.params.title}\nby ${navigation.state.params.author}`,
             })
-            .then(console.log('Shared article'));
+            .then(Alert.alert('Shared article'));
           }}
-          style={{ marginRight: 15 }}
+          style={styles.marginAlign}
           >
           <Icon
             color="black"
@@ -77,5 +78,11 @@ const BucurestiulTinerilor = () => {
     </Provider>
   );
 };
+
+const styles = StyleSheet.create({
+  marginAlign: {
+    marginRight: 15,
+  },
+});
 
 AppRegistry.registerComponent('BucurestiulTinerilor', () => BucurestiulTinerilor);

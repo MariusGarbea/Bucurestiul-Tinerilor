@@ -5,13 +5,15 @@ import Video from 'react-native-video';
 import { Content, ListItem, Body, Left, Right } from 'native-base';
 import { connect } from 'react-redux';
 
-import { selectSong } from '../actions/actions';
+import { podcastSelect } from '../actions/actions';
 
 class Podcast extends PureComponent {
-  state = {
-    paused: false,
+  componentDidUpdate(prevProps) {
+    if(prevProps.details.timeSeek !== this.props.details.timeSeek) { // Check if the slider has moved
+      this.player.seek(this.props.details.timeSeek * this.props.parsedDuration); // Navigate to where the user released the slider
+    }
   }
-  openSoundcloudPodcast = (link) => {
+  openSoundcloudPodcast = link => {
     Linking.canOpenURL(link)
       .then(supported => {
         if (!supported) {
@@ -23,17 +25,13 @@ class Podcast extends PureComponent {
       .catch(err => Alert.alert('An error occurred', err));
   }
   render() {
-    const { duration, id, link, onSongSelect, pubDate, thumbnail, title, url } = this.props;
+    const { details, id, onPodcastSelect } = this.props;
+    const { duration, isPlaying, link, pubDate, thumbnail, title, url } = details;
     const date = pubDate.substring(5, 16);
     return (
       <Content>
         <Video
-          onLoad={() => {
-            this.setState({
-              paused: true,
-            });
-          }}
-          paused={this.state.paused}
+          paused={!isPlaying}
           ref={ref => {
             this.player = ref;
           }}
@@ -50,20 +48,16 @@ class Podcast extends PureComponent {
                  text: 'Visit on Soundcloud',
                  onPress: () => {
                    this.openSoundcloudPodcast(link);
-                   console.log('Soundcloud visited');
                  },
                },
                {
                  text: 'Dismiss',
-                 onPress: () => {
-                   console.log('Dismissed');
-                 },
                },
              ],
            );
          }}
          onPress={() => {
-           onSongSelect(id);
+           onPodcastSelect(id);
          }}>
           <Left>
             <Image
@@ -85,27 +79,42 @@ class Podcast extends PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const parseDurationString = durationString => ( // Transform podcasts's duration from string to int in seconds
+  parseInt(durationString.substring(0, 2), 10) * 3600
+  + parseInt(durationString.substring(3, 5), 10) * 60
+  + parseInt(durationString.substring(6, 8), 10)
+);
+
+const mapStateToProps = (state, ownProps) => {
+  console.log(state.data);
   return {
-    isPlaying: state.songIsPlaying
+    details: state.data[ownProps.id],
+    parsedDuration: parseDurationString(state.data[ownProps.id].duration),
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSongSelect: (id) => {
-      dispatch(selectSong(id));
-    }
-  }
-}
+    onPodcastSelect: id => {
+      dispatch(podcastSelect(id));
+    },
+  };
+};
 
 Podcast.propTypes = {
-  duration: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
-  pubDate: PropTypes.string.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  details: PropTypes.shape({
+    duration: PropTypes.string.isRequired,
+    isPlaying: PropTypes.bool.isRequired,
+    link: PropTypes.string.isRequired,
+    pubDate: PropTypes.string.isRequired,
+    thumbnail: PropTypes.string.isRequired,
+    timeSeek: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+  }),
+  id: PropTypes.number.isRequired,
+  onPodcastSelect: PropTypes.func.isRequired,
+  parsedDuration: PropTypes.number.isRequired,
 };
 
 const styles = StyleSheet.create({

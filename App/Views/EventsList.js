@@ -16,7 +16,6 @@ export default class EventsList extends Component {
   }
   componentDidMount() {
     this.searchForUpdates();
-    // setInterval(this.searchForUpdates.bind(this), 600000); // call the API every 10 minutes
   }
   async searchForUpdates() {
     try {
@@ -41,7 +40,7 @@ export default class EventsList extends Component {
           },
         ],
         {
-          cancelable: false
+          cancelable: false,
         }
       );
     }
