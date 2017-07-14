@@ -6,6 +6,7 @@ import { Content, ListItem, Body, Left, Right } from 'native-base';
 import { connect } from 'react-redux';
 
 import { podcastSelect, sliderMove } from '../actions/actions';
+import { parseDurationString } from '../reducers/reducer';
 
 class Podcast extends PureComponent {
   componentDidUpdate(prevProps) {
@@ -80,17 +81,11 @@ class Podcast extends PureComponent {
   }
 }
 
-const parseDurationString = durationString => ( // Transform podcasts's duration from string to int in seconds
-  parseInt(durationString.substring(0, 2), 10) * 3600
-  + parseInt(durationString.substring(3, 5), 10) * 60
-  + parseInt(durationString.substring(6, 8), 10)
-);
-
 const mapStateToProps = (state, ownProps) => {
   console.log(state.data);
   return {
-    details: state.data[ownProps.id],
-    parsedDuration: parseDurationString(state.data[ownProps.id].duration),
+    details: state.podcastReducer.data[ownProps.id],
+    parsedDuration: parseDurationString(state.podcastReducer.data[ownProps.id].duration),
   };
 };
 

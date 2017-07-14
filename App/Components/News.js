@@ -2,18 +2,17 @@ import React, { PureComponent } from 'react';
 import { StyleSheet, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { Content, Card, CardItem, Left, Right, Body } from 'native-base';
+import { connect } from 'react-redux';
 
-export default class News extends PureComponent {
-  state = {
-    width: Dimensions.get('window').width,
-  }
-  onLayout = () => {
-    this.setState({
-      width: Dimensions.get('window').width,
-    });
-  }
+import { screenWidthChange } from '../actions/actions';
+
+class News extends PureComponent {
+  imageStyle = width => ({
+    height: width / 2.3,
+    width,
+  })
   render() {
-    const { author, content, link, pubDate, title } = this.props;
+    const { author, content, link, onLayoutChange, pubDate, screenWidth, title } = this.props;
     const date = pubDate.substring(5, 16);
     return (
       <TouchableOpacity
@@ -26,7 +25,7 @@ export default class News extends PureComponent {
           title,
         })}
       >
-        <Content onLayout={() => this.onLayout()}>
+        <Content onLayout={() => onLayoutChange(Dimensions.get('window').width)}>
           <Card>
             <CardItem>
               <Left>
@@ -40,7 +39,7 @@ export default class News extends PureComponent {
               <Image
                resizeMode="center"
                source={{ uri: 'https://bucurestiultinerilor.info/wp-content/uploads/2017/03/Bucurestiul_Tinerilor_Logo_4cm-01.jpg' }}
-               style={{ width: this.state.width, height: this.state.width / 2.3 }}
+               style={this.imageStyle(screenWidth)}
               />
             </CardItem>
             <CardItem>
@@ -55,15 +54,33 @@ export default class News extends PureComponent {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    screenWidth: state.screenReducer.screenWidth,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onLayoutChange: value => {
+      dispatch(screenWidthChange(value));
+    },
+  };
+};
+
 News.propTypes = {
   author: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
   navigation: PropTypes.object.isRequired,
+  onLayoutChange: PropTypes.func.isRequired,
   pubDate: PropTypes.string.isRequired,
+  screenWidth: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
 };
 
 const styles = StyleSheet.create({
 
 });
+
+export default connect(mapStateToProps, mapDispatchToProps)(News);

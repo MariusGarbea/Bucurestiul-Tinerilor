@@ -65,9 +65,9 @@ class PodcastsList extends Component {
 
 const mapStateToProps = state => {
   return {
-    data: state.data,
-    error: state.error,
-    isLoading: state.isLoading,
+    data: state.podcastReducer.data,
+    error: state.podcastReducer.error,
+    isLoading: state.podcastReducer.isLoading,
   };
 };
 

@@ -1,4 +1,4 @@
-// Structure of the app's state
+// Structure of the podcast's state tree
 const podcastInitialState = {
   data: [
     {
@@ -18,7 +18,11 @@ const podcastInitialState = {
   podcastCurrentlyOn: 0,
 };
 
-const reducer = (state = podcastInitialState, action) => {
+const screenInitialState = {
+  screenWidth: 0,
+};
+
+const podcastReducer = (state = podcastInitialState, action) => {
   switch(action.type) {
   case 'PODCAST_ERROR':
     return {
@@ -68,4 +72,22 @@ const reducer = (state = podcastInitialState, action) => {
   }
 };
 
-export default reducer;
+const screenReducer = (state = screenInitialState, action) => {
+  switch(action.type) {
+  case 'SCREEN_WIDTH_CHANGE':
+    return {
+      ...state,
+      screenWidth: action.value,
+    };
+  default:
+    return state;
+  }
+};
+
+const parseDurationString = durationString => ( // Transform podcasts's duration from string to int, in seconds
+  parseInt(durationString.substring(0, 2), 10) * 3600
+  + parseInt(durationString.substring(3, 5), 10) * 60
+  + parseInt(durationString.substring(6, 8), 10)
+);
+
+export { parseDurationString, podcastReducer, screenReducer };
