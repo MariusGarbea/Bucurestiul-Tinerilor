@@ -34,6 +34,7 @@ class PodcastPlayer extends PureComponent {
     const { activePodcast, onPlayPauseClick, onSliderMove, podcastPlaying } = this.props;
     const { duration, thumbnail, timeSeek, title } = activePodcast;
     const { width } = this.state;
+    const parsedDuration = parseDurationString(duration);
     // Fix title to fit in the player
     const displayTitle = `${title.substr(0, 33)}...`; // Temporary solution
     const icon = podcastPlaying
@@ -51,14 +52,14 @@ class PodcastPlayer extends PureComponent {
         <View>
           <View style={styles.row}>
             <Text style={styles.marginAlign}>{ displayTitle }</Text>
-            <Text>{ duration }</Text>
+            <Text>{ parseDurationInt(parseInt(timeSeek * parsedDuration, 10)) }</Text>
           </View>
           <View style={styles.row}>
             <TouchableOpacity onPress={() => onPlayPauseClick()}>{ icon }</TouchableOpacity>
             <Slider
-              onValueChange={value => onSliderMove(value)}
+              onSlidingComplete={value => onSliderMove(value)}
               style={this.playerStyle(width).slider}
-              value={timeSeek} // Where the user released the slider
+              value={timeSeek} // The value of the slider - used to remember where the user paused a podcast
             />
           </View>
         </View>
@@ -66,6 +67,27 @@ class PodcastPlayer extends PureComponent {
     );
   }
 }
+
+const pad = (str, padString, length) => {
+  while (str.length < length) {
+    str = padString + str;
+  }
+  return str;
+};
+
+const parseDurationString = durationString => ( // Transform podcasts's duration from string to int, in seconds
+  parseInt(durationString.substring(0, 2), 10) * 3600
+  + parseInt(durationString.substring(3, 5), 10) * 60
+  + parseInt(durationString.substring(6, 8), 10)
+);
+
+const parseDurationInt = seconds => {
+  let minutes = Math.floor(seconds / 60);
+  seconds = seconds % 60;
+  const hours = Math.floor(minutes / 60);
+  minutes = minutes % 60;
+  return `${pad(hours.toString(), '0', 2)}:${pad(minutes.toString(), '0', 2)}:${pad(seconds.toString(), '0', 2)}`;
+};
 
 const getCurrentlyPlayingPodcast = podcasts => {
   return podcasts.data.filter(podcast => podcast.id === podcasts.podcastCurrentlyOn)[0];

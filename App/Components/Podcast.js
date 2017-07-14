@@ -5,7 +5,7 @@ import Video from 'react-native-video';
 import { Content, ListItem, Body, Left, Right } from 'native-base';
 import { connect } from 'react-redux';
 
-import { podcastSelect } from '../actions/actions';
+import { podcastSelect, sliderMove } from '../actions/actions';
 
 class Podcast extends PureComponent {
   componentDidUpdate(prevProps) {
@@ -25,12 +25,13 @@ class Podcast extends PureComponent {
       .catch(err => Alert.alert('An error occurred', err));
   }
   render() {
-    const { details, id, onPodcastSelect } = this.props;
+    const { details, id, onPodcastSelect, parsedDuration, updateSlider } = this.props;
     const { duration, isPlaying, link, pubDate, thumbnail, title, url } = details;
     const date = pubDate.substring(5, 16);
     return (
       <Content>
         <Video
+          onProgress={value => updateSlider(value.currentTime / parsedDuration)} // Update the slider to automatically move with the playing podcast
           paused={!isPlaying}
           ref={ref => {
             this.player = ref;
@@ -98,6 +99,9 @@ const mapDispatchToProps = dispatch => {
     onPodcastSelect: id => {
       dispatch(podcastSelect(id));
     },
+    updateSlider: value => {
+      dispatch(sliderMove(value));
+    },
   };
 };
 
@@ -115,6 +119,7 @@ Podcast.propTypes = {
   id: PropTypes.number.isRequired,
   onPodcastSelect: PropTypes.func.isRequired,
   parsedDuration: PropTypes.number.isRequired,
+  updateSlider: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

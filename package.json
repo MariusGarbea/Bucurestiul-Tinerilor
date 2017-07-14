@@ -19,8 +19,10 @@
 		"react-native-xml2js": "^1.0.3",
 		"react-navigation": "^1.0.0-beta.11",
 		"react-redux": "^5.0.5",
+		"recompose": "^0.24.0",
 		"redux": "^3.7.1",
-		"redux-thunk": "^2.2.0"
+		"redux-thunk": "^2.2.0",
+		"reselect": "^3.0.1"
 	},
 	"devDependencies": {
 		"babel-eslint": "^7.2.3",

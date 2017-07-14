@@ -7,7 +7,11 @@ const AboutWithSpinner = SpinnerHOC(View);
 
 const About = () => (
   <AboutWithSpinner>
-    <Text>Wanna contribute to our app? </Text>
+    <Text>
+      Viziunea noastră este o capitală în care tinerii au șanse egale de a beneficia și a creea oportunități.
+      Misiunea noastră este de a conecta tinerii la tineri similari lor prin creearea unei comunități.
+    </Text>
+    <Text>Vrei sa contribui?</Text>
     <Button
       onPress={() =>
         Linking.canOpenURL('https://github.com/MariusGarbea/Bucurestiul-Tinerilor')
@@ -19,7 +23,7 @@ const About = () => (
           }
         })
         .catch(err => Alert.alert('An error occurred', err))}
-      title="Do it here"
+      title="Haide!"
       />
   </AboutWithSpinner>
 );
