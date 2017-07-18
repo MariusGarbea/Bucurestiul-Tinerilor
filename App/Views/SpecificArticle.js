@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, ScrollView, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, ScrollView, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import HTMLView from 'react-native-htmlview';
 import { connect } from 'react-redux';
 
-import { screenWidthChange } from '../actions/actions';
+import { getScreenWidth } from '../reducers/selectors';
 
 class SpecificArticle extends PureComponent {
   imageStyle = width => ({
@@ -13,9 +13,9 @@ class SpecificArticle extends PureComponent {
   })
   render() {
     const { author, content, date, title } = this.props.navigation.state.params;
-    const { onLayoutChange, screenWidth } = this.props;
+    const { screenWidth } = this.props;
     return (
-      <ScrollView onLayout={() => onLayoutChange(Dimensions.get('window').width)}>
+      <ScrollView>
         <Image
          resizeMode="contain"
          source={{ uri: 'https://bucurestiultinerilor.info/wp-content/uploads/2017/03/Bucurestiul_Tinerilor_Logo_4cm-01.jpg' }}
@@ -34,15 +34,7 @@ class SpecificArticle extends PureComponent {
 
 const mapStateToProps = state => {
   return {
-    screenWidth: state.screenReducer.screenWidth,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onLayoutChange: value => {
-      dispatch(screenWidthChange(value));
-    },
+    screenWidth: getScreenWidth(state),
   };
 };
 
@@ -51,7 +43,6 @@ SpecificArticle.propTypes = {
   content: PropTypes.string,
   date: PropTypes.string,
   navigation: PropTypes.object,
-  onLayoutChange: PropTypes.func.isRequired,
   screenWidth: PropTypes.number.isRequired,
   title: PropTypes.string,
 };
@@ -65,4 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SpecificArticle);
+export default connect(mapStateToProps)(SpecificArticle);

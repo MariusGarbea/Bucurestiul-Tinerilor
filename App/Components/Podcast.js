@@ -6,13 +6,12 @@ import { Content, ListItem, Body, Left, Right } from 'native-base';
 import { connect } from 'react-redux';
 
 import { podcastSelect, sliderMove } from '../actions/actions';
-import { parseDurationString } from '../reducers/reducer';
+import { getParsedDuration, getPodcastDetails, getTimeSeek } from '../reducers/selectors';
 
 class Podcast extends PureComponent {
   componentDidUpdate(prevProps) {
-    if(prevProps.details.timeSeek !== this.props.details.timeSeek) { // Check if the slider has moved
-      this.player.seek(this.props.details.timeSeek * this.props.parsedDuration); // Navigate to where the user released the slider
-    }
+    const { timeSeek, parsedDuration } = this.props;
+    this.player.seek(timeSeek * parsedDuration); // Navigate to where the user released the slider
   }
   openSoundcloudPodcast = link => {
     Linking.canOpenURL(link)
@@ -29,6 +28,7 @@ class Podcast extends PureComponent {
     const { details, id, onPodcastSelect, parsedDuration, updateSlider } = this.props;
     const { duration, isPlaying, link, pubDate, thumbnail, title, url } = details;
     const date = pubDate.substring(5, 16);
+    console.log('Podcast');
     return (
       <Content>
         <Video
@@ -81,12 +81,17 @@ class Podcast extends PureComponent {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  console.log(state.data);
-  return {
-    details: state.podcastReducer.data[ownProps.id],
-    parsedDuration: parseDurationString(state.podcastReducer.data[ownProps.id].duration),
+const makeMapStateToProps = () => {
+  const getDetails = getPodcastDetails();
+  const getDuration = getParsedDuration();
+  const mapStateToProps = (state, ownProps) => {
+    return {
+      details: getDetails(state, ownProps),
+      parsedDuration: getDuration(state, ownProps),
+      timeSeek: getTimeSeek(state),
+    };
   };
+  return mapStateToProps;
 };
 
 const mapDispatchToProps = dispatch => {
@@ -107,13 +112,13 @@ Podcast.propTypes = {
     link: PropTypes.string.isRequired,
     pubDate: PropTypes.string.isRequired,
     thumbnail: PropTypes.string.isRequired,
-    timeSeek: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
   }),
   id: PropTypes.number.isRequired,
   onPodcastSelect: PropTypes.func.isRequired,
   parsedDuration: PropTypes.number.isRequired,
+  timeSeek: PropTypes.number.isRequired,
   updateSlider: PropTypes.func.isRequired,
 };
 
@@ -124,4 +129,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Podcast);
+export default connect(makeMapStateToProps, mapDispatchToProps)(Podcast);

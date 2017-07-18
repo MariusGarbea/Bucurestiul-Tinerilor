@@ -8,6 +8,7 @@ import Podcast from '../Components/Podcast';
 import PodcastPlayer from '../Components/PodcastPlayer';
 import SpinnerHOC from '../Components/SpinnerHOC';
 import { podcastItemsFetchData } from '../actions/actions';
+import { getError, getFetchData, getLoadingStatus } from '../reducers/selectors';
 
 const PodcastWithSpinner = SpinnerHOC(View);
 
@@ -15,7 +16,8 @@ const podcastsEndpoint = 'http://feeds.soundcloud.com/users/soundcloud:users:312
 
 class PodcastsList extends Component {
   componentDidMount() {
-    this.props.fetchPodcastData(podcastsEndpoint);
+    const { fetchPodcastData } = this.props;
+    fetchPodcastData(podcastsEndpoint);
   }
   fetchHasErrored = () => (
     Alert.alert(
@@ -65,9 +67,9 @@ class PodcastsList extends Component {
 
 const mapStateToProps = state => {
   return {
-    data: state.podcastReducer.data,
-    error: state.podcastReducer.error,
-    isLoading: state.podcastReducer.isLoading,
+    data: getFetchData(state),
+    error: getError(state),
+    isLoading: getLoadingStatus(state),
   };
 };
 

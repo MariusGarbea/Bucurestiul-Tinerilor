@@ -1,10 +1,14 @@
 // Consider using WebView for displaying articles; advantages: can render the iframes
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, View, Alert, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
 import parseXML from 'react-native-xml2js';
 import PushNotification from 'react-native-push-notification';
+import { connect } from 'react-redux';
+
+import { screenWidthChange } from '../actions/actions';
+import { getScreenWidth } from '../reducers/selectors';
 
 import News from '../Components/News';
 import SpinnerHOC from '../Components/SpinnerHOC';
@@ -13,7 +17,7 @@ const newsEndpoint = 'http://bucurestiultinerilor.info/feed/';
 
 const NewsWithSpinner = SpinnerHOC(View);
 
-export default class NewsList extends Component {
+class NewsList extends Component {
   state = {
     newsList: [],
   }
@@ -55,6 +59,7 @@ export default class NewsList extends Component {
     }
   }
   render() {
+    const { onLayoutChange, screenWidth } = this.props;
     const spinner = this.state.newsList.length === 0;
     const news = this.state.newsList.map((item, index) => {
       return (
@@ -65,22 +70,44 @@ export default class NewsList extends Component {
           link={item.link[0]}
           navigation={this.props.navigation}
           pubDate={item.pubDate[0]}
+          screenWidth={screenWidth}
           title={item.title[0]}
         />
       );
     });
     return (
-      <NewsWithSpinner spinner={spinner}>
+      <NewsWithSpinner
+        onLayout={() => onLayoutChange(Dimensions.get('window').width)}
+        spinner={spinner}
+      >
         { news }
       </NewsWithSpinner>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    screenWidth: getScreenWidth(state),
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onLayoutChange: value => {
+      dispatch(screenWidthChange(value));
+    },
+  };
+};
+
 NewsList.propTypes = {
   navigation: PropTypes.object.isRequired,
+  onLayoutChange: PropTypes.func.isRequired,
+  screenWidth: PropTypes.number.isRequired,
 };
 
 const styles = StyleSheet.create({
 
 });
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewsList);

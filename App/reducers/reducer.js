@@ -1,3 +1,5 @@
+import { Dimensions } from 'react-native';
+
 // Structure of the podcast's state tree
 const podcastInitialState = {
   data: [
@@ -8,7 +10,6 @@ const podcastInitialState = {
       link: 'link',
       pubDate: 'pubDate',
       thumbnail: 'thumbnail',
-      timeSeek: 0,
       title: 'title',
       url: 'url',
     },
@@ -16,10 +17,11 @@ const podcastInitialState = {
   hasErrored: false,
   isLoading: false,
   podcastCurrentlyOn: 0,
+  timeSeek: 0,
 };
 
 const screenInitialState = {
-  screenWidth: 0,
+  screenWidth: Dimensions.get('window').width,
 };
 
 const podcastReducer = (state = podcastInitialState, action) => {
@@ -52,6 +54,7 @@ const podcastReducer = (state = podcastInitialState, action) => {
     return {
       ...state,
       podcastCurrentlyOn: action.id,
+      timeSeek: 0,
       data: state.data.map(podcast =>
         (podcast.id === action.id)
           ? { ...podcast, isPlaying: true }
@@ -61,11 +64,7 @@ const podcastReducer = (state = podcastInitialState, action) => {
   case 'SLIDER_MOVE':
     return {
       ...state,
-      data: state.data.map(podcast =>
-        (podcast.id === state.podcastCurrentlyOn)
-          ? { ...podcast, timeSeek: action.value }
-          : { ...podcast }
-        ),
+      timeSeek: action.value,
     };
   default:
     return state;
@@ -84,10 +83,4 @@ const screenReducer = (state = screenInitialState, action) => {
   }
 };
 
-const parseDurationString = durationString => ( // Transform podcasts's duration from string to int, in seconds
-  parseInt(durationString.substring(0, 2), 10) * 3600
-  + parseInt(durationString.substring(3, 5), 10) * 60
-  + parseInt(durationString.substring(6, 8), 10)
-);
-
-export { parseDurationString, podcastReducer, screenReducer };
+export { podcastReducer, screenReducer };

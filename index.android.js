@@ -6,7 +6,7 @@ TODO:
 */
 
 import React from 'react';
-import { AppRegistry, Share, TouchableOpacity, Alert, StyleSheet } from 'react-native';
+import { AppRegistry, Share, TouchableOpacity, StyleSheet } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import PushNotification from 'react-native-push-notification';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -55,8 +55,7 @@ const App = StackNavigator({
           onPress={() => {
             Share.share({
               message: `${navigation.state.params.link}\n${navigation.state.params.title}\nby ${navigation.state.params.author}`,
-            })
-            .then(Alert.alert('Shared article'));
+            });
           }}
           style={styles.marginAlign}
           >

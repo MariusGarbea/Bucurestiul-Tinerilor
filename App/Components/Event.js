@@ -35,14 +35,10 @@ export default class Event extends PureComponent {
                    text: 'Visit on Facebook',
                    onPress: () => {
                      this.openFacebookEvent(eventURL);
-                     console.log('Facebook visited');
                    },
                  },
                  {
                    text: 'Dismiss',
-                   onPress: () => {
-                     console.log('Dismissed');
-                   },
                  },
                ],
              );
@@ -71,12 +67,12 @@ Event.defaultProps = {
     name: 'Unknown place',
     location: {
       city: 'Unknown city',
-      country: '',
-      latitude: NaN,
-      longitude: NaN,
-      street: '',
+      country: 'Unknown country',
+      latitude: 0,
+      longitude: 0,
+      street: 'Unknown street',
     },
-    id: '',
+    id: 'Unknown ID',
   },
 };
 
