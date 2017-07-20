@@ -1,6 +1,7 @@
 package com.bucurestiultinerilor;
 
 import com.brentvatne.react.ReactVideoPackage;
+import com.zmxv.RNSound.RNSoundPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.idehub.GoogleAnalyticsBridge.GoogleAnalyticsBridgePackage;
 
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
           new ReactVideoPackage(),
+          new RNSoundPackage(),
           new ReactNativePushNotificationPackage(),
           new GoogleAnalyticsBridgePackage()
       );

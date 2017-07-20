@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, Text, Image, Alert, Linking } from 'react-native';
 import PropTypes from 'prop-types';
-import Video from 'react-native-video';
+import Sound from 'react-native-sound';
 import { Content, ListItem, Body, Left, Right } from 'native-base';
 import { connect } from 'react-redux';
 
@@ -9,9 +9,30 @@ import { podcastSelect, sliderMove } from '../actions/actions';
 import { getParsedDuration, getPodcastDetails, getTimeSeek } from '../reducers/selectors';
 
 class Podcast extends PureComponent {
+  componentDidMount() {
+    this.podcast = new Sound(this.props.details.url, undefined, error => {
+      console.log('loaded');
+      if(error) {
+        console.log(error)
+      }
+    });
+  }
   componentDidUpdate(prevProps) {
-    const { timeSeek, parsedDuration } = this.props;
-    this.player.seek(timeSeek * parsedDuration); // Navigate to where the user released the slider
+    const { details, id, onPodcastSelect, parsedDuration, timeSeek, updateSlider } = this.props;
+    const { duration, isPlaying, link, pubDate, thumbnail, title, url } = details;
+    
+      if(isPlaying) {
+        this.podcast.play(() => {
+          // Release when it's done so we're not using up resources
+          this.podcast.release();
+        });
+      } else {
+        this.podcast.pause();
+        this.podcast.setCurrentTime(timeSeek);
+      }
+  }
+  componentWillUnmount() {
+    // release sound
   }
   openSoundcloudPodcast = link => {
     Linking.canOpenURL(link)
@@ -25,21 +46,11 @@ class Podcast extends PureComponent {
       .catch(err => Alert.alert('An error occurred', err));
   }
   render() {
-    const { details, id, onPodcastSelect, parsedDuration, updateSlider } = this.props;
+    const { details, id, onPodcastSelect, parsedDuration, timeSeek, updateSlider } = this.props;
     const { duration, isPlaying, link, pubDate, thumbnail, title, url } = details;
     const date = pubDate.substring(5, 16);
-    console.log('Podcast');
     return (
       <Content>
-        <Video
-          onProgress={value => updateSlider(value.currentTime / parsedDuration)} // Update the slider to automatically move with the playing podcast
-          paused={!isPlaying}
-          ref={ref => {
-            this.player = ref;
-          }}
-          source={{ uri: url }}
-          style={styles.video}
-        />
         <ListItem avatar
          onLongPress={() => {
            Alert.alert(

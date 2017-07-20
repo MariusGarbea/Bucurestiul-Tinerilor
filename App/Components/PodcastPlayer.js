@@ -31,7 +31,6 @@ class PodcastPlayer extends PureComponent {
     const icon = podcastPlaying
     ? <Icon color="black" name="controller-paus" size={30} />
     : <Icon color="black" name="controller-play" size={30} />;
-    console.log('Podcast Player');
     return (
       <View style={this.playerStyle(screenWidth).playerLayout}>
         <Image
