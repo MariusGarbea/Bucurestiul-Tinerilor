@@ -47,7 +47,7 @@ class PodcastPlayer extends PureComponent {
             <Slider
               onSlidingComplete={value => onSliderMove(value)}
               style={this.playerStyle(screenWidth).slider}
-              value={timeSeek} // The value of the slider - used to remember where the user paused a podcast
+              value={timeSeek} // Where the slider is currently at
             />
           </View>
         </View>

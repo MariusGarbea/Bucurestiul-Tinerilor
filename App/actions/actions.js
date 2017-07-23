@@ -23,7 +23,6 @@ const podcastItemsFetchData = url => {
           link: item.link[0],
           pubDate: item.pubDate[0],
           thumbnail: item['itunes:image'][0].$.href,
-          timeSeek: 0, // Where the podcast was paused
           title: item.title[0],
           url: item.enclosure[0].$.url,
         }));
