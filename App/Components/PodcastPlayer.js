@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Entypo';
 import { connect } from 'react-redux';
 
-import { playerPauseResumeToggle, sliderMove } from '../actions/actions';
-import { getCurrentlyPlayingPodcast, getScreenWidth, getTimeSeek, isAnyPodcastPlaying } from '../reducers/selectors';
+import { playerPauseResumeToggle, sliderMove, timeSeek } from '../actions/actions';
+import { getCurrentlyPlayingPodcast, getScreenWidth, getProgress, isAnyPodcastPlaying } from '../reducers/selectors';
 
 class PodcastPlayer extends PureComponent {
   playerStyle = width => ({
@@ -24,7 +24,7 @@ class PodcastPlayer extends PureComponent {
     },
   })
   render() {
-    const { activePodcast, onPlayPauseClick, onSliderMove, podcastPlaying, screenWidth, timeSeek } = this.props;
+    const { activePodcast, onPlayPauseClick, onSliderMove, onTimeSeek, podcastPlaying, screenWidth, progress } = this.props;
     const { thumbnail, title } = activePodcast;
     // Fix title to fit in the player
     const displayTitle = `${title.substr(0, 40)}...`; // Temporary solution
@@ -45,9 +45,9 @@ class PodcastPlayer extends PureComponent {
           <View style={styles.row}>
             <TouchableOpacity onPress={() => onPlayPauseClick()}>{ icon }</TouchableOpacity>
             <Slider
-              onSlidingComplete={value => onSliderMove(value)}
+              onSlidingComplete={value => onTimeSeek(value)}
               style={this.playerStyle(screenWidth).slider}
-              value={timeSeek} // Where the slider is currently at
+              value={progress} // Where the slider is currently at
             />
           </View>
         </View>
@@ -61,7 +61,7 @@ const mapStateToProps = state => {
     activePodcast: getCurrentlyPlayingPodcast(state),
     podcastPlaying: isAnyPodcastPlaying(state),
     screenWidth: getScreenWidth(state),
-    timeSeek: getTimeSeek(state),
+    progress: getProgress(state),
   };
 };
 
@@ -72,6 +72,9 @@ const mapDispatchToProps = dispatch => {
     },
     onSliderMove: value => {
       dispatch(sliderMove(value));
+    },
+    onTimeSeek: value => {
+      dispatch(timeSeek(value));
     },
   };
 };
@@ -86,7 +89,7 @@ PodcastPlayer.propTypes = {
   onSliderMove: PropTypes.func.isRequired,
   podcastPlaying: PropTypes.bool.isRequired,
   screenWidth: PropTypes.number.isRequired,
-  timeSeek: PropTypes.number.isRequired,
+  progress: PropTypes.number.isRequired,
 };
 
 const $tabBlue = '#2196F3';

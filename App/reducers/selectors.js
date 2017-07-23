@@ -38,10 +38,10 @@ const getPodcastDetails = () => createSelector(
   }
 );
 
-const getTimeSeek = createSelector(
-  state => state.podcastReducer.timeSeek,
-  timeSeek => {
-    return timeSeek;
+const getProgress = createSelector(
+  state => state.podcastReducer.progress,
+  progress => {
+    return progress;
   }
 );
 
@@ -53,6 +53,22 @@ const getCurrentlyPlayingPodcast = createSelector(
   [getPodcasts, getPodcastCurrentlyOn],
   (podcasts, currentlyActivePodcast) => {
     return podcasts.filter(podcast => podcast.id === currentlyActivePodcast)[0];
+  }
+);
+
+const getParsedDuration = () => createSelector(
+  (state, ownProps) => state.podcastReducer.data[ownProps.id].duration,
+  durationString => { // Transform podcasts's duration from string to int, in seconds
+    return parseInt(durationString.substring(0, 2), 10) * 3600
+      + parseInt(durationString.substring(3, 5), 10) * 60
+      + parseInt(durationString.substring(6, 8), 10);
+  }
+);
+
+const getTimeSeek = () => createSelector(
+  state => state.podcastReducer.timeSeek,
+  timeSeek => {
+    return timeSeek;
   }
 );
 
@@ -69,17 +85,8 @@ const isAnyPodcastPlaying = createSelector(
   }
 );
 
-const getParsedDuration = () => createSelector(
-  (state, ownProps) => state.podcastReducer.data[ownProps.id].duration,
-  durationString => { // Transform podcasts's duration from string to int, in seconds
-    return parseInt(durationString.substring(0, 2), 10) * 3600
-      + parseInt(durationString.substring(3, 5), 10) * 60
-      + parseInt(durationString.substring(6, 8), 10);
-  }
-);
-
 export {
   getCurrentlyPlayingPodcast, getError, getFetchData, getLoadingStatus,
-  getPodcastDetails, getScreenWidth, getTimeSeek, isAnyPodcastPlaying,
-  getParsedDuration,
+  getPodcastDetails, getScreenWidth, getProgress, isAnyPodcastPlaying,
+  getParsedDuration, getTimeSeek
 };

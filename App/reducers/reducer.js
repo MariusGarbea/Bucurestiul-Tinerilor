@@ -17,6 +17,7 @@ const podcastInitialState = {
   hasErrored: false,
   isLoading: false,
   podcastCurrentlyOn: 0,
+  progress: 0,
   timeSeek: 0,
 };
 
@@ -54,7 +55,7 @@ const podcastReducer = (state = podcastInitialState, action) => {
     return {
       ...state,
       podcastCurrentlyOn: action.id,
-      timeSeek: 0,
+      progress: 0,
       data: state.data.map(podcast =>
         (podcast.id === action.id)
           ? { ...podcast, isPlaying: true }
@@ -62,6 +63,11 @@ const podcastReducer = (state = podcastInitialState, action) => {
         ),
     };
   case 'SLIDER_MOVE':
+    return {
+      ...state,
+      progress: action.value,
+    };
+  case 'TIME_SEEK':
     return {
       ...state,
       timeSeek: action.value,
