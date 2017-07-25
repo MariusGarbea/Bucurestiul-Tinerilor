@@ -72,5 +72,5 @@ const timeSeek = value => ({
 export {
   playerPauseResumeToggle, podcastItemsFetchData, podcastError,
   podcastListLoading, podcastSelect, podcastSuccessFetch, screenWidthChange,
-  sliderMove, timeSeek
+  sliderMove, timeSeek,
 };

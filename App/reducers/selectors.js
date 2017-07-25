@@ -88,5 +88,5 @@ const isAnyPodcastPlaying = createSelector(
 export {
   getCurrentlyPlayingPodcast, getError, getFetchData, getLoadingStatus,
   getPodcastDetails, getScreenWidth, getProgress, isAnyPodcastPlaying,
-  getParsedDuration, getTimeSeek
+  getParsedDuration, getTimeSeek,
 };

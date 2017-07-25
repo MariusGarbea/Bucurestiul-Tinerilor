@@ -50,9 +50,7 @@ class PodcastsList extends Component {
       );
     });
     if(error) {
-      return (
-        this.fetchHasErrored()
-      );
+      return this.fetchHasErrored();
     }
     return (
       <Container>

@@ -24,7 +24,7 @@ class PodcastPlayer extends PureComponent {
     },
   })
   render() {
-    const { activePodcast, onPlayPauseClick, onSliderMove, onTimeSeek, podcastPlaying, screenWidth, progress } = this.props;
+    const { activePodcast, onPlayPauseClick, onTimeSeek, podcastPlaying, screenWidth, progress } = this.props;
     const { thumbnail, title } = activePodcast;
     // Fix title to fit in the player
     const displayTitle = `${title.substr(0, 40)}...`; // Temporary solution
@@ -87,9 +87,10 @@ PodcastPlayer.propTypes = {
   }),
   onPlayPauseClick: PropTypes.func.isRequired,
   onSliderMove: PropTypes.func.isRequired,
+  onTimeSeek: PropTypes.func.isRequired,
   podcastPlaying: PropTypes.bool.isRequired,
-  screenWidth: PropTypes.number.isRequired,
   progress: PropTypes.number.isRequired,
+  screenWidth: PropTypes.number.isRequired,
 };
 
 const $tabBlue = '#2196F3';
