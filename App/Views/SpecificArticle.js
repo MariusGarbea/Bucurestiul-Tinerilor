@@ -17,15 +17,15 @@ class SpecificArticle extends PureComponent {
     return (
       <ScrollView>
         <Image
-         resizeMode="contain"
-         source={{ uri: 'https://bucurestiultinerilor.info/wp-content/uploads/2017/03/Bucurestiul_Tinerilor_Logo_4cm-01.jpg' }}
-         style={this.imageStyle(screenWidth)}
+          resizeMode="contain"
+          source={{ uri: 'https://bucurestiultinerilor.info/wp-content/uploads/2017/03/Bucurestiul_Tinerilor_Logo_4cm-01.jpg' }}
+          style={this.imageStyle(screenWidth)}
         />
         <Text>{ title }</Text>
         <Text>by { author } | { date }</Text>
         <HTMLView
-         stylesheet={styles}
-         value={content}
+          stylesheet={styles}
+          value={content}
         />
       </ScrollView>
     );

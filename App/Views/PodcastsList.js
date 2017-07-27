@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import Podcast from '../Components/Podcast';
 import PodcastPlayer from '../Components/PodcastPlayer';
 import SpinnerHOC from '../Components/SpinnerHOC';
-import { podcastItemsFetchData } from '../actions/actions';
+import { podcastItemsFetchData } from '../actions/podcasts';
 import { getError, getFetchData, getLoadingStatus } from '../reducers/selectors';
 
 const PodcastWithSpinner = SpinnerHOC(View);
@@ -65,9 +65,9 @@ class PodcastsList extends Component {
 
 const mapStateToProps = state => {
   return {
-    data: getFetchData(state),
-    error: getError(state),
-    isLoading: getLoadingStatus(state),
+    data: getFetchData(state.podcastReducer),
+    error: getError(state.podcastReducer),
+    isLoading: getLoadingStatus(state.podcastReducer),
   };
 };
 

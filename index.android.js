@@ -10,7 +10,7 @@ import { AppRegistry, Share, TouchableOpacity, StyleSheet } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import PushNotification from 'react-native-push-notification';
 import Icon from 'react-native-vector-icons/Entypo';
-import { GoogleAnalyticsTracker } from 'react-native-google-analytics-bridge';
+import { GoogleAnalyticsTracker, GoogleAnalyticsSettings } from 'react-native-google-analytics-bridge';
 import { Provider } from 'react-redux';
 
 import EventsList from './App/Views/EventsList';
@@ -21,6 +21,9 @@ import SpecificArticle from './App/Views/SpecificArticle';
 import store from './App/store/configureStore';
 
 const tracker = new GoogleAnalyticsTracker('UA-93545315-1');
+
+GoogleAnalyticsSettings.setDryRun(true);
+tracker.trackScreenView('Home');
 
 // Push Notification Configuration
 PushNotification.configure({

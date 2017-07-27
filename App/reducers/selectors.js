@@ -10,21 +10,21 @@ const getScreenWidth = createSelector(
 
 // Initial fetch selectors
 const getFetchData = createSelector(
-  state => state.podcastReducer.data,
+  state => state.data,
   data => {
     return data;
   }
 );
 
 const getError = createSelector(
-  state => state.podcastReducer.error,
+  state => state.error,
   error => {
     return error;
   }
 );
 
 const getLoadingStatus = createSelector(
-  state => state.podcastReducer.isLoading,
+  state => state.isLoading,
   isLoading => {
     return isLoading;
   }

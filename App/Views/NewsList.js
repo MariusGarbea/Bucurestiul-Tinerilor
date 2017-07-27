@@ -3,82 +3,67 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Alert, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
-import parseXML from 'react-native-xml2js';
 import PushNotification from 'react-native-push-notification';
 import { connect } from 'react-redux';
 
-import { screenWidthChange } from '../actions/actions';
-import { getScreenWidth } from '../reducers/selectors';
-
 import News from '../Components/News';
 import SpinnerHOC from '../Components/SpinnerHOC';
+import { newsItemsFetchData } from '../actions/news';
+import { screenWidthChange } from '../actions/screen';
+import { getError, getFetchData, getLoadingStatus, getScreenWidth } from '../reducers/selectors';
 
 const newsEndpoint = 'http://bucurestiultinerilor.info/feed/';
 
 const NewsWithSpinner = SpinnerHOC(View);
 
 class NewsList extends Component {
-  state = {
-    newsList: [],
-  }
   componentDidMount() {
-    this.searchForUpdates();
+    const { fetchNewsData } = this.props;
+    fetchNewsData(newsEndpoint);
   }
-  async searchForUpdates() {
-    try {
-      const response = await fetch(newsEndpoint);
-      const responseTXT = await response.text();
-      parseXML.parseString(responseTXT, (error, result) => {
-        if (error) {
-          throw new Error(error);
-        }
-        const data = result.rss.channel[0].item;
-        this.setState({ newsList: data });
-      });
-    } catch(error) {
-      Alert.alert(
-        'Oops',
-        `An error has occurred. Error details: ${error}`,
-        [
-          {
-            text: 'Retry',
-            onPress: () => {
-              console.log(`Error fetching data - Retry Pressed. Error: ${error}`);
-              this.searchForUpdates();
-            },
-          },
-          {
-            text: 'Cancel',
-            onPress: () => console.log(`Error fetching data - Cancel Pressed. Error: ${error}`),
-          },
-        ],
+  fetchHasErrored = () => (
+    Alert.alert(
+      'Oops',
+      `An error has occurred. Error details: ${this.props.error}`,
+      [
         {
-          cancelable: false,
-        }
-      );
-    }
-  }
+          text: 'Retry',
+          onPress: () => {
+            this.props.fetchNewsData(newsEndpoint);
+          },
+        },
+        {
+          text: 'Cancel',
+        },
+      ],
+      {
+        cancelable: false,
+      }
+    )
+  )
   render() {
-    const { onLayoutChange, screenWidth } = this.props;
-    const spinner = this.state.newsList.length === 0;
-    const news = this.state.newsList.map((item, index) => {
+    const { data, error, isLoading, onLayoutChange, screenWidth } = this.props;
+    const news = data.map((item, index) => {
       return (
         <News
-          author={item['dc:creator'][0]}
-          content={item['content:encoded'][0]}
+          author={item.author}
+          content={item.content}
           key={index}
-          link={item.link[0]}
+          link={item.link}
           navigation={this.props.navigation}
-          pubDate={item.pubDate[0]}
+          pubDate={item.pubDate}
           screenWidth={screenWidth}
-          title={item.title[0]}
+          title={item.title}
         />
       );
     });
+    if(error) {
+      return this.fetchHasErrored();
+    }
     return (
       <NewsWithSpinner
         onLayout={() => onLayoutChange(Dimensions.get('window').width)}
-        spinner={spinner}
+        spinner={isLoading}
       >
         { news }
       </NewsWithSpinner>
@@ -88,12 +73,16 @@ class NewsList extends Component {
 
 const mapStateToProps = state => {
   return {
+    data: getFetchData(state.newsReducer),
+    error: getError(state.newsReducer),
+    isLoading: getLoadingStatus(state.newsReducer),
     screenWidth: getScreenWidth(state),
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    fetchNewsData: url => dispatch(newsItemsFetchData(url)),
     onLayoutChange: value => {
       dispatch(screenWidthChange(value));
     },
@@ -101,6 +90,10 @@ const mapDispatchToProps = dispatch => {
 };
 
 NewsList.propTypes = {
+  data: PropTypes.array.isRequired,
+  error: PropTypes.object,
+  fetchNewsData: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   navigation: PropTypes.object.isRequired,
   onLayoutChange: PropTypes.func.isRequired,
   screenWidth: PropTypes.number.isRequired,

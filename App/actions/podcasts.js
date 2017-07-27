@@ -54,11 +54,6 @@ const podcastSuccessFetch = data => ({
   data,
 });
 
-const screenWidthChange = value => ({
-  type: 'SCREEN_WIDTH_CHANGE',
-  value,
-});
-
 const sliderMove = value => ({
   type: 'SLIDER_MOVE',
   value,
@@ -71,6 +66,6 @@ const timeSeek = value => ({
 
 export {
   playerPauseResumeToggle, podcastItemsFetchData, podcastError,
-  podcastListLoading, podcastSelect, podcastSuccessFetch, screenWidthChange,
+  podcastListLoading, podcastSelect, podcastSuccessFetch,
   sliderMove, timeSeek,
 };

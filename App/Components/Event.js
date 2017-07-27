@@ -6,7 +6,7 @@ import { Content, ListItem, Body, Left, Right } from 'native-base';
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export default class Event extends PureComponent {
-  openFacebookEvent = (url) => { // Open facebook link
+  openFacebookEvent = url => { // Open facebook link
     Linking.canOpenURL(url)
       .then(supported => {
         if (!supported) {

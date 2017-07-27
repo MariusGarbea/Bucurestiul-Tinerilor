@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Event from '../Components/Event';
 import SpinnerHOC from '../Components/SpinnerHOC';
+import { eventItemsFetchData } from '../actions/events';
+import { getError, getFetchData, getLoadingStatus } from '../reducers/selectors';
 
 const accessToken = `EAADbb7hJuS0BAGPNwhGiD3JLXWYUF8oxGNwEc4ZAiB7WRMBOaWXwjRFkTnQIC7HCNIMMzOQB75ZCmVZBL9THwrS7p
                      WvOXaMqBECqFvZAijINas3FfcCnFTgehAQZAbwM7HsJHmE1dujvqCjuaBaMVVYUaZCZBBE7yZCYBZC7XLqAdmQZDZD`;
@@ -10,63 +14,80 @@ const eventsEndpoint = `https://graph.facebook.com/bucurestiultinerilor/events?a
 
 const EventsWithSpinner = SpinnerHOC(View);
 
-export default class EventsList extends Component {
-  state = {
-    eventList: [],
-  }
+class EventsList extends Component {
   componentDidMount() {
-    this.searchForUpdates();
+    const { fetchEventData } = this.props;
+    fetchEventData(eventsEndpoint);
   }
-  async searchForUpdates() {
-    try {
-      const response = await fetch(eventsEndpoint);
-      const responseJSON = await response.json();
-      this.setState({ eventList: responseJSON.data });
-    } catch(error) {
-      Alert.alert(
-        'Oops',
-        `An error has occurred. Error details: ${error}`,
-        [
-          {
-            text: 'Retry',
-            onPress: () => {
-              console.log(`Retry Pressed. Error: ${error}`);
-              this.searchForUpdates();
-            },
-          },
-          {
-            text: 'Cancel',
-            onPress: () => console.log(`Cancel Pressed. Error: ${error}`),
-          },
-        ],
+  fetchHasErrored = () => (
+    Alert.alert(
+      'Oops',
+      `An error has occurred. Error details: ${this.props.error}`,
+      [
         {
-          cancelable: false,
-        }
-      );
-    }
-  }
+          text: 'Retry',
+          onPress: () => {
+            this.props.fetchEventData(eventsEndpoint);
+          },
+        },
+        {
+          text: 'Cancel',
+        },
+      ],
+      {
+        cancelable: false,
+      }
+    )
+  )
   render() {
-    const spinner = this.state.eventList.length === 0;
-    const events = this.state.eventList.map(item => {
+    const { data, error, isLoading } = this.props;
+    const events = data.map(item => {
       return (
         <Event
           description={item.description}
-          endTime={item.end_time}
+          endTime={item.endTime}
           id={item.id}
           key={item.id}
           name={item.name}
           place={item.place}
-          startTime={item.start_time}
+          startTime={item.startTime}
         />
       );
     });
+    if(error) {
+      return this.fetchHasErrored();
+    }
     return (
-      <EventsWithSpinner spinner={spinner}>
+      <EventsWithSpinner spinner={isLoading}>
         { events }
       </EventsWithSpinner>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    data: getFetchData(state.eventReducer),
+    error: getError(state.eventReducer),
+    isLoading: getLoadingStatus(state.eventReducer),
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchEventData: url => dispatch(eventItemsFetchData(url)),
+  };
+};
+
+EventsList.propTypes = {
+  data: PropTypes.array.isRequired,
+  error: PropTypes.object,
+  fetchEventData: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+};
+
 const styles = StyleSheet.create({
+
 });
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventsList);

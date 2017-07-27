@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Entypo';
 import { connect } from 'react-redux';
 
-import { playerPauseResumeToggle, sliderMove, timeSeek } from '../actions/actions';
+import { playerPauseResumeToggle, sliderMove, timeSeek } from '../actions/podcasts';
 import { getCurrentlyPlayingPodcast, getScreenWidth, getProgress, isAnyPodcastPlaying } from '../reducers/selectors';
 
 class PodcastPlayer extends PureComponent {

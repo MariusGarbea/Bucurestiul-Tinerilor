@@ -34,9 +34,9 @@ export default class News extends PureComponent {
             </CardItem>
             <CardItem cardBody>
               <Image
-               resizeMode="center"
-               source={{ uri: 'https://bucurestiultinerilor.info/wp-content/uploads/2017/03/Bucurestiul_Tinerilor_Logo_4cm-01.jpg' }}
-               style={this.imageStyle(screenWidth)}
+                resizeMode="center"
+                source={{ uri: 'https://bucurestiultinerilor.info/wp-content/uploads/2017/03/Bucurestiul_Tinerilor_Logo_4cm-01.jpg' }}
+                style={this.imageStyle(screenWidth)}
               />
             </CardItem>
             <CardItem>

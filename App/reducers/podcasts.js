@@ -1,5 +1,3 @@
-import { Dimensions } from 'react-native';
-
 // Structure of the podcast's state tree
 const podcastInitialState = {
   data: [
@@ -14,15 +12,11 @@ const podcastInitialState = {
       url: 'url',
     },
   ],
-  hasErrored: false,
+  error: null,
   isLoading: false,
   podcastCurrentlyOn: 0,
   progress: 0,
   timeSeek: 0,
-};
-
-const screenInitialState = {
-  screenWidth: Dimensions.get('window').width,
 };
 
 const podcastReducer = (state = podcastInitialState, action) => {
@@ -77,16 +71,4 @@ const podcastReducer = (state = podcastInitialState, action) => {
   }
 };
 
-const screenReducer = (state = screenInitialState, action) => {
-  switch(action.type) {
-  case 'SCREEN_WIDTH_CHANGE':
-    return {
-      ...state,
-      screenWidth: action.value,
-    };
-  default:
-    return state;
-  }
-};
-
-export { podcastReducer, screenReducer };
+export { podcastReducer };

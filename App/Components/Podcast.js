@@ -5,7 +5,7 @@ import Video from 'react-native-video';
 import { Content, ListItem, Body, Left, Right } from 'native-base';
 import { connect } from 'react-redux';
 
-import { playerPauseResumeToggle, podcastSelect, sliderMove } from '../actions/actions';
+import { playerPauseResumeToggle, podcastSelect, sliderMove } from '../actions/podcasts';
 import { getParsedDuration, getPodcastDetails, getProgress, getTimeSeek } from '../reducers/selectors';
 
 class Podcast extends Component {
