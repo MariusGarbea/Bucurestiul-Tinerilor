@@ -139,6 +139,8 @@ dependencies {
     compile project(':react-native-video')
     compile project(':react-native-push-notification')
     compile project(':react-native-google-analytics-bridge')
+    compile project(':react-native-background-job')
+    compile project(':RNAdMob')
     compile ('com.google.android.gms:play-services-gcm:+') {
         force = true;
     }

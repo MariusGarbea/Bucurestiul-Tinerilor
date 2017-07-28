@@ -3,6 +3,8 @@ package com.bucurestiultinerilor;
 import com.brentvatne.react.ReactVideoPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.idehub.GoogleAnalyticsBridge.GoogleAnalyticsBridgePackage;
+import com.pilloxa.backgroundjob.BackgroundJobPackage;
+import com.sbugert.rnadmob.RNAdMobPackage;
 
 import android.app.Application;
 
@@ -29,7 +31,9 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
           new ReactVideoPackage(),
           new ReactNativePushNotificationPackage(),
-          new GoogleAnalyticsBridgePackage()
+          new GoogleAnalyticsBridgePackage(),
+          new BackgroundJobPackage(),
+          new RNAdMobPackage()
       );
     }
   };
