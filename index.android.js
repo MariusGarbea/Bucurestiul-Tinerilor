@@ -1,7 +1,6 @@
 /*
 TODO:
   -Push Notifications for all 3 pages when app is in background
-  -Add Google Analytics - UA-93545315-1
   -Add Ads
 */
 
@@ -20,12 +19,13 @@ import About from './App/Views/About';
 import SpecificArticle from './App/Views/SpecificArticle';
 import store from './App/store/configureStore';
 
+// Google Analytics
 const tracker = new GoogleAnalyticsTracker('UA-93545315-1');
 
 GoogleAnalyticsSettings.setDryRun(true);
 tracker.trackScreenView('Home');
 
-// Push Notification Configuration
+// Push Notifications
 PushNotification.configure({
   // Called when a notification is opened
   onNotification(notification) {

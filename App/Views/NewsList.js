@@ -1,10 +1,11 @@
 // Consider using WebView for displaying articles; advantages: can render the iframes
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Alert, Dimensions } from 'react-native';
+import { StyleSheet, View, Alert, Dimensions, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import PushNotification from 'react-native-push-notification';
 import { connect } from 'react-redux';
+import { AdMobBanner } from 'react-native-admob';
 
 import News from '../Components/News';
 import SpinnerHOC from '../Components/SpinnerHOC';
@@ -61,12 +62,19 @@ class NewsList extends Component {
       return this.fetchHasErrored();
     }
     return (
-      <NewsWithSpinner
-        onLayout={() => onLayoutChange(Dimensions.get('window').width)}
-        spinner={isLoading}
-      >
-        { news }
-      </NewsWithSpinner>
+      <ScrollView>
+        <AdMobBanner
+          adUnitID="ca-app-pub-3940256099942544/6300978111"
+          bannerSize="fullBanner"
+          testDeviceID="EMULATOR"
+        />
+        <NewsWithSpinner
+          onLayout={() => onLayoutChange(Dimensions.get('window').width)}
+          spinner={isLoading}
+        >
+          { news }
+        </NewsWithSpinner>
+      </ScrollView>
     );
   }
 }

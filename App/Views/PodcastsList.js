@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, View, Alert, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import { Container } from 'native-base';
 import { connect } from 'react-redux';
+import { AdMobBanner } from 'react-native-admob';
 
 import Podcast from '../Components/Podcast';
 import PodcastPlayer from '../Components/PodcastPlayer';
@@ -54,9 +55,16 @@ class PodcastsList extends Component {
     }
     return (
       <Container>
-        <PodcastWithSpinner spinner={isLoading}>
-          { podcasts }
-        </PodcastWithSpinner>
+        <ScrollView>
+          <AdMobBanner
+          adUnitID="ca-app-pub-3940256099942544/6300978111"
+          bannerSize="fullBanner"
+          testDeviceID="EMULATOR"
+          />
+          <PodcastWithSpinner spinner={isLoading}>
+            { podcasts }
+          </PodcastWithSpinner>
+        </ScrollView>
         <PodcastPlayer />
       </Container>
     );

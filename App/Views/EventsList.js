@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, View, Alert, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { AdMobBanner } from 'react-native-admob';
 
 import Event from '../Components/Event';
 import SpinnerHOC from '../Components/SpinnerHOC';
@@ -58,9 +59,16 @@ class EventsList extends Component {
       return this.fetchHasErrored();
     }
     return (
-      <EventsWithSpinner spinner={isLoading}>
-        { events }
-      </EventsWithSpinner>
+      <ScrollView>
+        <AdMobBanner
+          adUnitID="ca-app-pub-3940256099942544/6300978111"
+          bannerSize="fullBanner"
+          testDeviceID="EMULATOR"
+        />
+        <EventsWithSpinner spinner={isLoading}>
+          { events }
+        </EventsWithSpinner>
+      </ScrollView>
     );
   }
 }
