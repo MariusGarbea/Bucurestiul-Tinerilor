@@ -50,6 +50,7 @@ const podcastReducer = (state = podcastInitialState, action) => {
       ...state,
       podcastCurrentlyOn: action.id,
       progress: 0,
+      timeSeek: 0,
       data: state.data.map(podcast =>
         (podcast.id === action.id)
           ? { ...podcast, isPlaying: true }

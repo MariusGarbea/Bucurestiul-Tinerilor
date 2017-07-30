@@ -3,6 +3,7 @@ import { StyleSheet, Text, ScrollView, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import HTMLView from 'react-native-htmlview';
 import { connect } from 'react-redux';
+import { AdMobBanner } from 'react-native-admob';
 
 import { getScreenWidth } from '../reducers/selectors';
 
@@ -16,6 +17,7 @@ class SpecificArticle extends PureComponent {
     const { screenWidth } = this.props;
     return (
       <ScrollView>
+        <AdMobBanner adUnitID="ca-app-pub-3940256099942544/6300978111" />
         <Image
           resizeMode="contain"
           source={{ uri: 'https://bucurestiultinerilor.info/wp-content/uploads/2017/03/Bucurestiul_Tinerilor_Logo_4cm-01.jpg' }}

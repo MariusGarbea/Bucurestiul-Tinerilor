@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import PushNotification from 'react-native-push-notification';
 import { connect } from 'react-redux';
 import { AdMobBanner } from 'react-native-admob';
+import BackgroundJob from 'react-native-background-job';
 
 import News from '../Components/News';
 import SpinnerHOC from '../Components/SpinnerHOC';
@@ -16,6 +17,18 @@ import { getError, getFetchData, getLoadingStatus, getScreenWidth } from '../red
 const newsEndpoint = 'http://bucurestiultinerilor.info/feed/';
 
 const NewsWithSpinner = SpinnerHOC(View);
+
+BackgroundJob.register({
+  jobKey: 'fetchNews',
+  job: () => {
+    // Fetch data and compare the first ID fetched with the first ID already stored
+  },
+});
+
+BackgroundJob.schedule({
+  jobKey: 'fetchNews',
+  period: 1800000, // 30 minutes
+});
 
 class NewsList extends Component {
   componentDidMount() {
@@ -62,16 +75,9 @@ class NewsList extends Component {
       return this.fetchHasErrored();
     }
     return (
-      <ScrollView>
-        <AdMobBanner
-          adUnitID="ca-app-pub-3940256099942544/6300978111"
-          bannerSize="fullBanner"
-          testDeviceID="EMULATOR"
-        />
-        <NewsWithSpinner
-          onLayout={() => onLayoutChange(Dimensions.get('window').width)}
-          spinner={isLoading}
-        >
+      <ScrollView onLayout={() => onLayoutChange(Dimensions.get('window').width)}>
+        <AdMobBanner adUnitID="ca-app-pub-3940256099942544/6300978111" />
+        <NewsWithSpinner spinner={isLoading}>
           { news }
         </NewsWithSpinner>
       </ScrollView>

@@ -1,7 +1,6 @@
 /*
 TODO:
   -Push Notifications for all 3 pages when app is in background
-  -Add Ads
 */
 
 import React from 'react';

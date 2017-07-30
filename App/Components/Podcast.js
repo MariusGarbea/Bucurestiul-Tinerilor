@@ -14,6 +14,7 @@ class Podcast extends Component {
     if(this.props.details.title !== 'title') { // Check if real data has been passed to avoid not rerendering for the first time
       return (
         nextProps.details.isPlaying || // Update for the playing podcast
+        this.props.timeSeek !== nextProps.timeSeek || // Or update every component to restart if timeSeek has changed and onPodcastSelect was called
         this.props.details.isPlaying !== nextProps.details.isPlaying || // Or update if the play button has been pressed
         !this.props.details.isPlaying && this.props.timeSeek !== nextProps.timeSeek // Or update if the slider was moved while podcast was paused
       );

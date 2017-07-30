@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Alert, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import { Container } from 'native-base';
+import PushNotification from 'react-native-push-notification';
 import { connect } from 'react-redux';
 import { AdMobBanner } from 'react-native-admob';
+import BackgroundJob from 'react-native-background-job';
 
 import Podcast from '../Components/Podcast';
 import PodcastPlayer from '../Components/PodcastPlayer';
@@ -14,6 +16,18 @@ import { getError, getFetchData, getLoadingStatus } from '../reducers/selectors'
 const PodcastWithSpinner = SpinnerHOC(View);
 
 const podcastsEndpoint = 'http://feeds.soundcloud.com/users/soundcloud:users:312765325/sounds.rss';
+
+BackgroundJob.register({
+  jobKey: 'fetchPodcasts',
+  job: () => {
+    // Fetch data and compare the first ID fetched with the first ID already stored
+  },
+});
+
+BackgroundJob.schedule({
+  jobKey: 'fetchPodcasts',
+  period: 1800000, // 30 minutes
+});
 
 class PodcastsList extends Component {
   componentDidMount() {
@@ -56,11 +70,7 @@ class PodcastsList extends Component {
     return (
       <Container>
         <ScrollView>
-          <AdMobBanner
-          adUnitID="ca-app-pub-3940256099942544/6300978111"
-          bannerSize="fullBanner"
-          testDeviceID="EMULATOR"
-          />
+          <AdMobBanner adUnitID="ca-app-pub-3940256099942544/6300978111" />
           <PodcastWithSpinner spinner={isLoading}>
             { podcasts }
           </PodcastWithSpinner>
