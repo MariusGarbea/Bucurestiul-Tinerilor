@@ -9,9 +9,7 @@ export default class Event extends PureComponent {
   openFacebookEvent = url => { // Open facebook link
     Linking.canOpenURL(url)
       .then(supported => {
-        if (!supported) {
-          console.log(`Can't handle url: ${url}`);
-        } else {
+        if (supported) {
           return Linking.openURL(url);
         }
       })

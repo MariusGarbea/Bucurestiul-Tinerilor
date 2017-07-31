@@ -10,11 +10,9 @@ import { getParsedDuration, getPodcastDetails, getProgress, getTimeSeek } from '
 
 class Podcast extends Component {
   shouldComponentUpdate(nextProps) {
-    // Rerender only the currently playing podcast or if the playing status has changed
     if(this.props.details.title !== 'title') { // Check if real data has been passed to avoid not rerendering for the first time
       return (
         nextProps.details.isPlaying || // Update for the playing podcast
-        this.props.timeSeek !== nextProps.timeSeek || // Or update every component to restart if timeSeek has changed and onPodcastSelect was called
         this.props.details.isPlaying !== nextProps.details.isPlaying || // Or update if the play button has been pressed
         !this.props.details.isPlaying && this.props.timeSeek !== nextProps.timeSeek // Or update if the slider was moved while podcast was paused
       );
@@ -23,6 +21,7 @@ class Podcast extends Component {
   }
   componentDidUpdate(prevProps) {
     const { parsedDuration, timeSeek } = this.props;
+    console.log('updated ' + this.props.details.id);
     if(prevProps.timeSeek !== timeSeek) { // Check if the slider has moved
       this.player.seek(this.props.timeSeek * parsedDuration); // Navigate to where the user released the slider
     }
@@ -30,9 +29,7 @@ class Podcast extends Component {
   openSoundcloudPodcast = link => {
     Linking.canOpenURL(link)
       .then(supported => {
-        if (!supported) {
-          console.log(`Can't handle url: ${link}`);
-        } else {
+        if (supported) {
           return Linking.openURL(link);
         }
       })
@@ -78,6 +75,7 @@ class Podcast extends Component {
          }}
          onPress={() => {
            onPodcastSelect(id);
+           this.player.seek(0);
          }}>
           <Left>
             <Image

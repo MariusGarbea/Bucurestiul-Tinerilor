@@ -19,9 +19,7 @@ const About = () => (
         onPress={() =>
           Linking.canOpenURL('https://github.com/MariusGarbea/Bucurestiul-Tinerilor')
           .then(supported => {
-            if (!supported) {
-              console.log('Can\'t handle url: https://github.com/MariusGarbea/Bucurestiul-Tinerilor');
-            } else {
+            if (supported) {
               return Linking.openURL('https://github.com/MariusGarbea/Bucurestiul-Tinerilor');
             }
           })

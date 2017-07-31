@@ -19,14 +19,14 @@ const NewsWithSpinner = SpinnerHOC(View);
 
 BackgroundJob.register({
   jobKey: 'fetchNews',
-  job: () => {
+  job: () => console.log("Fired")
     // Fetch data and compare the first ID fetched with the first ID already stored
-  },
 });
 
 BackgroundJob.schedule({
   jobKey: 'fetchNews',
   period: 1800000, // 30 minutes
+  timeout: 5000,
 });
 
 class NewsList extends Component {
