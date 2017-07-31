@@ -1,7 +1,7 @@
 // Consider using WebView for displaying articles; advantages: can render the iframes
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Alert, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, View, Alert, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import PushNotification from 'react-native-push-notification';
 import { connect } from 'react-redux';
@@ -11,7 +11,6 @@ import BackgroundJob from 'react-native-background-job';
 import News from '../Components/News';
 import SpinnerHOC from '../Components/SpinnerHOC';
 import { newsItemsFetchData } from '../actions/news';
-import { screenWidthChange } from '../actions/screen';
 import { getError, getFetchData, getLoadingStatus, getScreenWidth } from '../reducers/selectors';
 
 const newsEndpoint = 'http://bucurestiultinerilor.info/feed/';
@@ -56,7 +55,7 @@ class NewsList extends Component {
     )
   )
   render() {
-    const { data, error, isLoading, onLayoutChange, screenWidth } = this.props;
+    const { data, error, isLoading, screenWidth } = this.props;
     const news = data.map((item, index) => {
       return (
         <News
@@ -75,7 +74,7 @@ class NewsList extends Component {
       return this.fetchHasErrored();
     }
     return (
-      <ScrollView onLayout={() => onLayoutChange(Dimensions.get('window').width)}>
+      <ScrollView>
         <AdMobBanner adUnitID="ca-app-pub-3940256099942544/6300978111" />
         <NewsWithSpinner spinner={isLoading}>
           { news }
@@ -97,9 +96,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchNewsData: url => dispatch(newsItemsFetchData(url)),
-    onLayoutChange: value => {
-      dispatch(screenWidthChange(value));
-    },
   };
 };
 
@@ -109,7 +105,6 @@ NewsList.propTypes = {
   fetchNewsData: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   navigation: PropTypes.object.isRequired,
-  onLayoutChange: PropTypes.func.isRequired,
   screenWidth: PropTypes.number.isRequired,
 };
 
