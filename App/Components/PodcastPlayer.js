@@ -13,7 +13,6 @@ class PodcastPlayer extends PureComponent {
       flexDirection: 'row',
       paddingLeft: 5,
       paddingRight: 5,
-      justifyContent: 'flex-start',
       alignItems: 'center',
       height: 75,
       width,

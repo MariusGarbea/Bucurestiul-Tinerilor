@@ -21,7 +21,6 @@ class Podcast extends Component {
   }
   componentDidUpdate(prevProps) {
     const { parsedDuration, timeSeek } = this.props;
-    console.log('updated ' + this.props.details.id);
     if(prevProps.timeSeek !== timeSeek) { // Check if the slider has moved
       this.player.seek(this.props.timeSeek * parsedDuration); // Navigate to where the user released the slider
     }
@@ -75,7 +74,7 @@ class Podcast extends Component {
          }}
          onPress={() => {
            onPodcastSelect(id);
-           this.player.seek(0);
+           this.player.seek(0); // Restart the podcast
          }}>
           <Left>
             <Image
