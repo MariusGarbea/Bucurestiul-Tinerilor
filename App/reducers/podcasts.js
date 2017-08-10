@@ -41,7 +41,7 @@ const podcastReducer = (state = podcastInitialState, action) => {
       ...state,
       data: state.data.map(podcast =>
         (podcast.id === state.podcastCurrentlyOn) // Find the currently playing podcast
-          ? { ...podcast, isPlaying: !podcast.isPlaying }
+          ? { ...podcast, isPlaying: action.playing }
           : { ...podcast, isPlaying: false }
       ),
     };

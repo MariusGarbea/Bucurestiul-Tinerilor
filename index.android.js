@@ -1,12 +1,6 @@
-/*
-TODO:
-  -Push Notifications for all 3 pages when app is in background
-*/
-
 import React from 'react';
 import { AppRegistry, Share, TouchableOpacity, StyleSheet } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
-import PushNotification from 'react-native-push-notification';
 import Icon from 'react-native-vector-icons/Entypo';
 import { GoogleAnalyticsTracker, GoogleAnalyticsSettings } from 'react-native-google-analytics-bridge';
 import { Provider } from 'react-redux';
@@ -23,14 +17,6 @@ const tracker = new GoogleAnalyticsTracker('UA-93545315-1');
 
 GoogleAnalyticsSettings.setDryRun(true);
 tracker.trackScreenView('Home');
-
-// Push Notifications
-PushNotification.configure({
-  // Called when a notification is opened
-  onNotification(notification) {
-    console.log('NOTIFICATION:', notification); // Navigate to the specific route
-  },
-});
 
 // Routing
 const Home = TabNavigator({

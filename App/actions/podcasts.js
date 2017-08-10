@@ -1,7 +1,8 @@
 import parseXML from 'react-native-xml2js';
 
-const playerPauseResumeToggle = () => ({
+const playerPauseResumeToggle = bool => ({
   type: 'PLAYER_PAUSE_RESUME_TOGGLE',
+  playing: bool,
 });
 
 const podcastItemsFetchData = url => {

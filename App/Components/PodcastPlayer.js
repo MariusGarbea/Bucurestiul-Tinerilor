@@ -24,7 +24,7 @@ class PodcastPlayer extends PureComponent {
   })
   render() {
     const { activePodcast, onPlayPauseClick, onTimeSeek, podcastPlaying, screenWidth, progress } = this.props;
-    const { thumbnail, title } = activePodcast;
+    const { isPlaying, thumbnail, title } = activePodcast;
     // Fix title to fit in the player
     const displayTitle = `${title.substr(0, 40)}...`; // Temporary solution
     const icon = podcastPlaying
@@ -42,9 +42,17 @@ class PodcastPlayer extends PureComponent {
             <Text style={styles.marginAlign}>{ displayTitle }</Text>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity onPress={() => onPlayPauseClick()}>{ icon }</TouchableOpacity>
+            <TouchableOpacity onPress={() => onPlayPauseClick(!isPlaying)}>{ icon }</TouchableOpacity>
             <Slider
-              onSlidingComplete={value => onTimeSeek(value)}
+              onSlidingComplete={value => {
+                onPlayPauseClick(true);
+                onTimeSeek(value);
+              }}
+              onValueChange={() => {
+                if(isPlaying) {
+                  onPlayPauseClick(false);
+                }
+              }}
               style={this.playerStyle(screenWidth).slider}
               value={progress} // Where the slider is currently at
             />
@@ -66,8 +74,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onPlayPauseClick: () => {
-      dispatch(playerPauseResumeToggle());
+    onPlayPauseClick: playing => {
+      dispatch(playerPauseResumeToggle(playing));
     },
     onSliderMove: value => {
       dispatch(sliderMove(value));

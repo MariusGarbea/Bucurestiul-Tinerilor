@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Alert, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
-import PushNotification from 'react-native-push-notification';
 import { connect } from 'react-redux';
 import { AdMobBanner } from 'react-native-admob';
-import BackgroundJob from 'react-native-background-job';
 
 import Event from '../Components/Event';
 import SpinnerHOC from '../Components/SpinnerHOC';
@@ -16,18 +14,6 @@ WvOXaMqBECqFvZAijINas3FfcCnFTgehAQZAbwM7HsJHmE1dujvqCjuaBaMVVYUaZCZBBE7yZCYBZC7X
 const eventsEndpoint = `https://graph.facebook.com/bucurestiultinerilor/events?access_token=${accessToken}`;
 
 const EventsWithSpinner = SpinnerHOC(View);
-
-BackgroundJob.register({
-  jobKey: 'fetchEvents',
-  job: () => {
-    // Fetch data and compare the first ID fetched with the first ID already stored
-  },
-});
-
-BackgroundJob.schedule({
-  jobKey: 'fetchEvents',
-  period: 1800000, // 30 minutes
-});
 
 class EventsList extends Component {
   componentDidMount() {

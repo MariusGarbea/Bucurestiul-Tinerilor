@@ -117,7 +117,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(podcastSelect(id));
     },
     resetPlayButton: () => {
-      dispatch(playerPauseResumeToggle());
+      dispatch(playerPauseResumeToggle(false));
     },
     updateSlider: value => {
       dispatch(sliderMove(value));
